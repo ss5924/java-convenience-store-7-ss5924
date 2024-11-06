@@ -32,4 +32,23 @@ public class Promotion {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getRequiredCondition() {
+        return requiredCondition;
+    }
+
+    public int getGiftQuantity() {
+        return giftQuantity;
+    }
+
+    public LocalDateTime getStartAt() {
+        return startAt;
+    }
+
+    public LocalDateTime getEndAt() {
+        return endAt;
+    }
 }
