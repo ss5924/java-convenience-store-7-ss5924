@@ -7,14 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GiftItemTest {
     private Product product;
+    private OrderItem orderItem;
 
     @BeforeEach
     void setUp() {
         product = new Product("상품명", 1000);
+        orderItem = new OrderItem(product, 3);
     }
 
     @Test
     void 증정품의_지불가격은_0원이다() {
-        assertEquals(0, new GiftItem(product, 3).getAmount());
+        assertEquals(0, new GiftItem(orderItem).getAmount());
     }
+
 }
