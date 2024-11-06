@@ -56,13 +56,13 @@
     - 상품의 이름, 가격
 2. Promotion
     - 프로모션 이름, n개 구매조건, n개 증정, 프로모션 시작일, 프로모션 종료일
-3. MemberShip
+3. Membership
     - 멤버십 할인 퍼센트, 남은 한도, 최대 한도(상수값)
 4. Receipt
     - 구매 상품 내역(Product), 증정 상품 내역(Product), 금액 정보(Amount)
 5. Payment
     - 지불할 금액
-    - 총구매액, 행사할인(Promotion), 멤버십할인(MemberShip), 최종지불금액
+    - 총구매액, 행사할인(Promotion), 멤버십할인(Membership), 최종지불금액
 6. Inventory
     - 재고 관리
     - 상품(Product), quantity, 적용 프로모션(Promotion)
@@ -85,7 +85,7 @@
     - 구매 프로세스 (프로모션 및 멤버십 적용 -> 영수증 프로세스 진행)
 5. PromotionService
     - 프로모션 조건 확인 및 적용
-6. MemberShipService
+6. MembershipService
     - 멤버십 할인 및 한도 관리
 7. ReceiptService
     - 영수증 생성
@@ -99,3 +99,10 @@
     - 사용자 입력
 3. OutputView
     - 콘솔 출력
+
+
+## 다. 변경 사항
+
+#### v1.0-SNAPSHOT - 2023-11-06
+- `OrderItem`로 개별 주문 상품 정보 관리, `Order`에서 주문 내역을 관할하여 여러 상품을 List로 관리
+- README에 업데이트 정보 추가
