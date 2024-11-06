@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class InventoryTest {
+class InventoryItemTest {
     private Product product;
     private Promotion promotion;
 
@@ -19,21 +19,21 @@ class InventoryTest {
 
     @Test
     void 재고수량이_0개_미만이면_예외가_발생한다() {
-        assertDoesNotThrow(() -> new Inventory(product, 0, promotion));
+        assertDoesNotThrow(() -> new InventoryItem(product, 0, promotion));
 
-        assertThatThrownBy(() -> new Inventory(product, -1, promotion))
+        assertThatThrownBy(() -> new InventoryItem(product, -1, promotion))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 상품이_null이면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Inventory(null, 0, promotion))
+        assertThatThrownBy(() -> new InventoryItem(null, 0, promotion))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 프로모션은_null이_가능하다() {
-        assertDoesNotThrow(() -> new Inventory(product, 0, null));
+        assertDoesNotThrow(() -> new InventoryItem(product, 0, null));
     }
 
 }

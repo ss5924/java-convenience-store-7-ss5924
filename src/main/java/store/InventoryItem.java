@@ -1,11 +1,11 @@
 package store;
 
-public class Inventory {
+public class InventoryItem {
     private Product product;
     private int quantity;
     private Promotion promotion;
 
-    public Inventory(Product product, int quantity, Promotion promotion) {
+    public InventoryItem(Product product, int quantity, Promotion promotion) {
         validate(product, quantity, promotion);
         this.product = product;
         this.quantity = quantity;
