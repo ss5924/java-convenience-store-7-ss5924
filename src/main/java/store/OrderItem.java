@@ -20,4 +20,11 @@ public class OrderItem {
         }
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

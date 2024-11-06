@@ -20,4 +20,8 @@ public class Order {
             throw new IllegalArgumentException("[ERROR] 주문 물품은 null이 될 수 없습니다.");
         }
     }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
 }
