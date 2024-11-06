@@ -72,6 +72,8 @@
 8. OrderItem
     - 주문 아이템 (낱개)
     - 주문 상품(Product), 주문 갯수(quantity)
+9. PurchaseItem, GiftItem, Item
+    - 주문 상품, 주문 갯수, 개별 지불 금액
 
 #### b. 비즈니스 로직 구현
 
@@ -100,9 +102,9 @@
 3. OutputView
     - 콘솔 출력
 
-
 ## 다. 변경 사항
 
 #### v1.0-SNAPSHOT - 2023-11-06
+- `PurchaseItem`, `GiftItem`, `Item` 도메인 추가하여 구매 상품 관리
 - `OrderItem`로 개별 주문 상품 정보 관리, `Order`에서 주문 내역을 관할하여 여러 상품을 List로 관리
 - README에 업데이트 정보 추가
