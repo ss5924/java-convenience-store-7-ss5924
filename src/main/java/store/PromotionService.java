@@ -2,19 +2,15 @@ package store;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PromotionService {
+public class PromotionService extends AbstractFileReadService {
     private static final String PROMOTION_FILE_PATH = "src/main/resources/promotions.md";
-    private final MarkdownFileReader markdownFileReader;
 
     public PromotionService(MarkdownFileReader markdownFileReader) {
-        this.markdownFileReader = markdownFileReader;
+        super(markdownFileReader);
     }
 
     public Promotion getPromotionWithinValidPeriod(String promotionName) {
@@ -35,7 +31,7 @@ public class PromotionService {
     }
 
     public List<Promotion> getAllPromotions() {
-        List<List<String>> promotionLines = markdownFileReader.readMarkdownFile(PROMOTION_FILE_PATH);
+        List<List<String>> promotionLines = getFileLines(PROMOTION_FILE_PATH);
         List<Promotion> promotions = new ArrayList<>();
 
         for (List<String> line : promotionLines) {
@@ -53,23 +49,6 @@ public class PromotionService {
 
     private Promotion setPromotion(String name, int requiredCondition, int giftQuantity, LocalDateTime startAt, LocalDateTime endAt) {
         return new Promotion(name, requiredCondition, giftQuantity, startAt, endAt);
-    }
-
-    private int parseInt(String element) {
-        try {
-            return Integer.parseInt(element);
-        } catch (NumberFormatException | NullPointerException e) {
-            throw new IllegalArgumentException("[ERROR] 숫자를 입력해주세요. element=" + element);
-        }
-    }
-
-    private LocalDateTime parseLocalDateTime(String date) {
-        try {
-            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            return localDate.atStartOfDay();
-        } catch (DateTimeParseException | NullPointerException e) {
-            throw new IllegalArgumentException("[ERROR] 올바른 날짜 형식으로 입력해주세요. date=" + date);
-        }
     }
 
 }
