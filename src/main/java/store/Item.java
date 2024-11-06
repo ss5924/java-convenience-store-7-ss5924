@@ -6,4 +6,6 @@ public interface Item {
     int getQuantity();
 
     int getAmount();
+
+    int getDiscountAmount();
 }

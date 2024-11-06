@@ -20,6 +20,10 @@ public class GiftItem implements Item {
         }
     }
 
+    public int getDiscountAmount() {
+        return this.product.getPrice() * this.quantity;
+    }
+
     @Override
     public int getAmount() {
         return 0;

@@ -34,4 +34,9 @@ public class PurchaseItem implements Item {
     public int getQuantity() {
         return this.quantity;
     }
+
+    @Override
+    public int getDiscountAmount() {
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 함수입니다.");
+    }
 }
