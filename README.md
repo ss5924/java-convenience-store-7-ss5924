@@ -68,7 +68,10 @@
     - 상품(Product), quantity, 적용 프로모션(Promotion)
 7. Order
     - 주문 관리
-    - 주문 상품명, 주문 갯수
+    - 주문 아이템 내역(OrderItem List)
+8. OrderItem
+    - 주문 아이템 (낱개)
+    - 주문 상품(Product), 주문 갯수(quantity)
 
 #### b. 비즈니스 로직 구현
 
