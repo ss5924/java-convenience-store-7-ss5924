@@ -4,13 +4,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
-public abstract class AbstractFileReadService {
+public abstract class AbstractFileReadService<T> {
     protected final MarkdownFileReader markdownFileReader;
 
     public AbstractFileReadService(MarkdownFileReader markdownFileReader) {
         this.markdownFileReader = markdownFileReader;
+    }
+
+    protected <T> List<T> parseFilesToObject(String filePath, Function<List<String>, T> mapper) {
+        List<List<String>> lines = getFileLines(filePath);
+        List<T> items = new ArrayList<>();
+        for (List<String> line : lines) {
+            T item = mapper.apply(line);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+        return items;
     }
 
     protected List<List<String>> getFileLines(String filePath) {
