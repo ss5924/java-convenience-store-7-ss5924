@@ -59,12 +59,12 @@
 3. Membership
     - 멤버십 할인 퍼센트, 남은 한도, 최대 한도(상수값)
 4. Receipt
-    - 구매 상품 내역(Product), 증정 상품 내역(Product), 금액 정보(Amount)
+    - 구매 상품 내역(PurchaseItems), 증정 상품 내역(GiftItems), 금액 정보(Amount)
 5. Payment
     - 지불할 금액
     - 총구매액, 행사할인(Promotion), 멤버십할인(Membership), 최종지불금액
-6. Inventory
-    - 재고 관리
+6. InventoryItem
+    - 재고 상품
     - 상품(Product), quantity, 적용 프로모션(Promotion)
 7. Order
     - 주문 관리
@@ -73,7 +73,7 @@
     - 주문 아이템 (낱개)
     - 주문 상품(Product), 주문 갯수(quantity)
 9. PurchaseItem, GiftItem, Item
-    - 주문 상품, 주문 갯수, 개별 지불 금액
+    - 주문 상품(Product), 주문 갯수, 개별 지불 금액
 
 #### b. 비즈니스 로직 구현
 
@@ -90,7 +90,7 @@
 6. MembershipService
     - 멤버십 할인 및 한도 관리
 7. ReceiptService
-    - 영수증 생성
+    - 영수증 관리
 
 #### c. 유틸리티 구현
 
@@ -105,6 +105,7 @@
 ## 다. 변경 사항
 
 #### v1.0-SNAPSHOT - 2023-11-06
+- `Inventory` -> '`InventoryItem` 클래스명 의미에 맞게 변경
 - `PurchaseItem`, `GiftItem`, `Item` 도메인 추가하여 구매 상품 관리
 - `OrderItem`로 개별 주문 상품 정보 관리, `Order`에서 주문 내역을 관할하여 여러 상품을 List로 관리
 - README에 업데이트 정보 추가
