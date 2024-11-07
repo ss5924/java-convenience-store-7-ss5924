@@ -94,6 +94,8 @@
     - 멤버십 할인 및 한도 관리
 7. ReceiptService
     - 영수증 관리
+8. AbstractFileReadService
+    - 파일 출력 처리
 
 #### c. 유틸리티 구현
 
@@ -108,8 +110,15 @@
 ## 다. 변경 사항
 
 #### v1.0-SNAPSHOT - 2023-11-06
+- `AbstractFileReadService` 추가하여 file read에 대한 관심사 분리, 공통 로직에 대한 처리
 - `Purchase`:구매 내역 정보 담게 변경, `Receipt`:영수증 출력 담당 도메인
 - `Inventory` -> '`InventoryItem` 클래스명 의미에 맞게 변경
 - `PurchaseItem`, `GiftItem`, `Item` 도메인 추가하여 구매 상품 관리
 - `OrderItem`로 개별 주문 상품 정보 관리, `Order`에서 주문 내역을 관할하여 여러 상품을 List로 관리
 - README에 업데이트 정보 추가
+
+
+## 라. TODO LIST
+
+#### v1.0-SNAPSHOT - 2023-11-07
+- file write에 대한 처리 구조에 대한 고려가 필요함
