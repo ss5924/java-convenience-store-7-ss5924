@@ -21,10 +21,10 @@ class PaymentTest {
         Product cola = new Product("cola", 1000);
         Product choco = new Product("choco", 2000);
 
-        purchaseItems.add(new PurchaseItem(new OrderItem(cola, 3)));
-        purchaseItems.add(new PurchaseItem(new OrderItem(choco, 5)));
+        purchaseItems.add(new PurchaseItem(cola, 3));
+        purchaseItems.add(new PurchaseItem(choco, 5));
 
-        giftItems.add(new GiftItem(new OrderItem(cola, 1)));
+        giftItems.add(new GiftItem(cola, 1));
 
         payment = new Payment(purchaseItems, giftItems);
     }

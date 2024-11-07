@@ -1,27 +1,27 @@
 package store;
 
 public class OrderItem {
-    private final Product product;
+    private String orderedProductName;
     private int quantity;
 
-    public OrderItem(Product product, int quantity) {
-        validate(product, quantity);
-        this.product = product;
+    public OrderItem(String orderedProductName, int quantity) {
+        validate(orderedProductName, quantity);
+        this.orderedProductName = orderedProductName;
         this.quantity = quantity;
     }
 
-    private void validate(Product product, int quantity) {
+    private void validate(String orderedProductName, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("[ERROR] 주문 수량은 0이상이어야 합니다.");
         }
 
-        if (product == null) {
+        if (orderedProductName == null) {
             throw new IllegalArgumentException("[ERROR] 주문 물품은 null이 될 수 없습니다.");
         }
     }
 
-    public Product getProduct() {
-        return product;
+    public String getOrderedProductName() {
+        return orderedProductName;
     }
 
     public int getQuantity() {

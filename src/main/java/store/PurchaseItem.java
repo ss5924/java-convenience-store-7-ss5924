@@ -4,10 +4,10 @@ public class PurchaseItem implements Item {
     private Product product;
     private int quantity;
 
-    public PurchaseItem(OrderItem orderItem) {
-        validate(orderItem.getProduct(), orderItem.getQuantity());
-        this.product = orderItem.getProduct();
-        this.quantity = orderItem.getQuantity();
+    public PurchaseItem(Product product, int quantity) {
+        validate(product, quantity);
+        this.product = product;
+        this.quantity = quantity;
     }
 
     private void validate(Product product, int quantity) {

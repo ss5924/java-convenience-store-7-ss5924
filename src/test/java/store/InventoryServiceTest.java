@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class InventoryServiceTest {
     private InventoryService inventoryService;
+    private static final LocalDateTime now = DateTimes.now();
+    private Product cola;
 
     @BeforeEach
     void setUp() {
         ProductService productService = new ProductService();
         PromotionService promotionService = new PromotionService();
         inventoryService = new InventoryService(productService, promotionService);
+        cola = new Product("콜라", 1000);
     }
 
     @DisplayName("상품명으로 재고를 가져와 프로모션 진행 상품과 일반 상품을 확인한다.")
@@ -71,6 +75,31 @@ class InventoryServiceTest {
         assertEquals("탄산2+1", inventoryItems.getFirst().getPromotion().getName());
         assertEquals("컵라면", inventoryItems.getLast().getProduct().getName());
         assertEquals("기간만료프로모션", inventoryItems.getLast().getPromotion().getName());
+    }
+
+    @DisplayName("상품의 프로모션이 진행되는 재고 갯수를 확인한다.")
+    @Test
+    void getCanApplyPromotionStockQuantity() {
+        int quantity = inventoryService.getCanApplyPromotionStockQuantity(cola, now);
+
+        assertEquals(10, quantity);
+    }
+
+    @DisplayName("상품중 프로모션이 진행되는 재고의 내용을 확인한다.")
+    @Test
+    void getPromotionStockItems() {
+        List<InventoryItem> items = inventoryService.getPromotionStockItems(cola, now);
+
+        assertEquals(1, items.size());
+        assertEquals("탄산2+1", items.get(0).getPromotion().getName());
+    }
+
+    @DisplayName("상품의 전체 갯수를 확인한다.")
+    @Test
+    void getCanApplyTotalQuantity() {
+        int quantity = inventoryService.getCanApplyTotalQuantity(cola, now);
+
+        assertEquals(20, quantity);
     }
 
 }

@@ -2,10 +2,10 @@ package store;
 
 import java.util.Arrays;
 
-public class InputParser {
+public class OrderInputParser {
     private ProductService productService;
 
-    public InputParser(ProductService productService) {
+    public OrderInputParser(ProductService productService) {
         this.productService = productService;
     }
 
@@ -30,9 +30,8 @@ public class InputParser {
         String[] itemParts = itemString.split("-");
         String productName = itemParts[0];
         int quantity = parseIntQuantity(itemParts[1]);
-        Product product = productService.getProduct(productName);
 
-        return new OrderItem(product, quantity);
+        return new OrderItem(productName, quantity);
     }
 
     private int parseIntQuantity(String quantityStr) {

@@ -5,11 +5,22 @@ import java.util.List;
 public class ProductService extends AbstractFileReadService<Product> {
     private static final String PRODUCT_FILE_PATH = "src/main/resources/products.md";
 
-    public Product getProduct(String productName, int price) {
-        return getProductByProductName(productName, price);
+    public Product getProduct(String productName) {
+        return getProductByProductName(productName);
     }
 
-    private Product getProductByProductName(String productName, int price) {
+    public Product getProduct(String productName, int price) {
+        return getProductByProductNameAndPrice(productName, price);
+    }
+
+    private Product getProductByProductName(String productName) {
+        return getAllProducts().stream().filter(product ->
+                        product.getName().equals(productName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다."));
+    }
+
+    private Product getProductByProductNameAndPrice(String productName, int price) {
         return getAllProducts().stream().filter(product ->
                         product.getName().equals(productName) && product.getPrice() == price)
                 .findFirst()

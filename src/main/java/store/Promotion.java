@@ -36,6 +36,10 @@ public class Promotion {
         return this.startAt.isBefore(now) && this.endAt.isAfter(now);
     }
 
+    public boolean isAvailableGift(int orderedQuantity) {
+        return orderedQuantity >= this.requiredCondition;
+    }
+
     public String getName() {
         return name;
     }

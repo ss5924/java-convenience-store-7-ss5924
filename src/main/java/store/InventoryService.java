@@ -1,7 +1,5 @@
 package store;
 
-import camp.nextstep.edu.missionutils.DateTimes;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,27 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
     public List<InventoryItem> getInventoryItems(String productName) {
         return getAllInventoryItems().stream()
                 .filter(inventoryItem -> inventoryItem.getProduct().getName().equals(productName))
+                .toList();
+    }
+
+    public int getCanApplyPromotionStockQuantity(Product product, LocalDateTime now) {
+        return getPromotionStockItems(product, now).stream()
+                .mapToInt(InventoryItem::getQuantity).sum();
+    }
+
+    public List<InventoryItem> getPromotionStockItems(Product product, LocalDateTime now) {
+        return getInventoryItemsWithinValidPeriod(product, now).stream()
+                .filter(inventoryItem -> inventoryItem.getPromotion() != null).toList();
+    }
+
+    public int getCanApplyTotalQuantity(Product product, LocalDateTime now) {
+        return getInventoryItemsWithinValidPeriod(product, now).stream()
+                .mapToInt(InventoryItem::getQuantity).sum();
+    }
+
+    public List<InventoryItem> getInventoryItemsWithinValidPeriod(Product product, LocalDateTime now) {
+        return getInventoryItemsWithinValidPeriod(now).stream()
+                .filter(inventoryItem -> inventoryItem.getProduct().equals(product))
                 .toList();
     }
 
