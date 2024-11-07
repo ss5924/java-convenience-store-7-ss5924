@@ -15,7 +15,13 @@ public abstract class AbstractFileReadService<T> {
         this.markdownFileReader = markdownFileReader;
     }
 
-    protected <T> List<T> parseFilesToObject(String filePath, Function<List<String>, T> mapper) {
+    protected abstract T mapToObject(List<String> line);
+
+    protected List<T> getAllObjects(String filePath) {
+        return parseFilesToObject(filePath, this::mapToObject);
+    }
+
+    private List<T> parseFilesToObject(String filePath, Function<List<String>, T> mapper) {
         List<List<String>> lines = getFileLines(filePath);
         List<T> items = new ArrayList<>();
         for (List<String> line : lines) {
@@ -27,7 +33,7 @@ public abstract class AbstractFileReadService<T> {
         return items;
     }
 
-    protected List<List<String>> getFileLines(String filePath) {
+    private List<List<String>> getFileLines(String filePath) {
         return markdownFileReader.readMarkdownFile(filePath);
     }
 

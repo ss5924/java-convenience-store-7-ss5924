@@ -35,10 +35,11 @@ public class PromotionService extends AbstractFileReadService<Promotion> {
     }
 
     public List<Promotion> getAllPromotions() {
-        return parseFilesToObject(PROMOTION_FILE_PATH, this::mapToPromotion);
+        return getAllObjects(PROMOTION_FILE_PATH);
     }
 
-    private Promotion mapToPromotion(List<String> line) {
+    @Override
+    protected Promotion mapToObject(List<String> line) {
         String name = line.get(0);
         int requiredCondition = parseInt(line.get(1));
         int giftQuantity = parseInt(line.get(2));
