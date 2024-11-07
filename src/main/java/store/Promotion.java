@@ -32,6 +32,10 @@ public class Promotion {
         }
     }
 
+    public boolean isValidPeriod(LocalDateTime now) {
+        return this.startAt.isBefore(now) && this.endAt.isAfter(now);
+    }
+
     public String getName() {
         return name;
     }

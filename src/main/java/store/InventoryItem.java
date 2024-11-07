@@ -22,4 +22,15 @@ public class InventoryItem {
         }
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
 }

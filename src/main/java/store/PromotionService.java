@@ -12,6 +12,13 @@ public class PromotionService extends AbstractFileReadService<Promotion> {
         super(markdownFileReader);
     }
 
+    public Promotion createPromotion(String promotionName) {
+        if ("null".equals(promotionName)) {
+            return null;
+        }
+        return getPromotion(promotionName);
+    }
+
     public Promotion getPromotion(String promotionName) {
         return getAllPromotions().stream()
                 .filter(promotion -> promotion.getName().equalsIgnoreCase(promotionName))
