@@ -11,10 +11,9 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
     private final ProductService productService;
     private final PromotionService promotionService;
 
-    public InventoryService(MarkdownFileReader markdownFileReader) {
-        super(markdownFileReader);
-        this.productService = new ProductService();
-        this.promotionService = new PromotionService(markdownFileReader);
+    public InventoryService(ProductService productService, PromotionService promotionService) {
+        this.productService = productService;
+        this.promotionService = promotionService;
     }
 
     public List<InventoryItem> getInventoryItems(String productName) {
@@ -34,8 +33,7 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
         return result;
     }
 
-    public List<InventoryItem> getInventoryItemsWithinValidPeriod() {
-        LocalDateTime now = DateTimes.now();
+    public List<InventoryItem> getInventoryItemsWithinValidPeriod(LocalDateTime now) {
         return getAllInventoryItems().stream()
                 .filter(inventoryItem -> inventoryItem.getPromotion() == null
                         || inventoryItem.getPromotion().isValidPeriod(now)).toList();
@@ -48,11 +46,11 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
     @Override
     protected InventoryItem mapToObject(List<String> line) {
         String promotionName = line.get(3);
-        Promotion promotion = promotionService.createPromotion(promotionName);
+        Promotion promotion = promotionService.getPromotion(promotionName);
 
         String productName = line.get(0);
         int productPrice = parseInt(line.get(1));
-        Product product = productService.createProduct(productName, productPrice);
+        Product product = productService.getProduct(productName, productPrice);
 
         int quantity = parseInt(line.get(2));
         return new InventoryItem(product, quantity, promotion);

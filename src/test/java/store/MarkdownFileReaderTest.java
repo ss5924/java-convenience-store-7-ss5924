@@ -14,7 +14,7 @@ class MarkdownFileReaderTest {
 
     @BeforeEach
     void setUp() {
-        markdownFileReader = new MarkdownFileReader();
+        markdownFileReader = MarkdownFileReader.getInstance();
     }
 
     @Test

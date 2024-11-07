@@ -8,7 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MarkdownFileReader {
-    private final static String REGEX = ",";
+    private static final MarkdownFileReader instance = new MarkdownFileReader();
+    private static final String REGEX = ",";
+
+    private MarkdownFileReader() {
+    }
+
+    public static MarkdownFileReader getInstance() {
+        return instance;
+    }
 
     public List<List<String>> readMarkdownFile(String filePath) {
         List<List<String>> data = new ArrayList<>();

@@ -1,5 +1,6 @@
 package store;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,9 @@ class InventoryServiceTest {
 
     @BeforeEach
     void setUp() {
-        MarkdownFileReader markdownFileReader = new MarkdownFileReader();
-        inventoryService = new InventoryService(markdownFileReader);
+        ProductService productService = new ProductService();
+        PromotionService promotionService = new PromotionService();
+        inventoryService = new InventoryService(productService, promotionService);
     }
 
     @DisplayName("상품명으로 재고를 가져와 프로모션 진행 상품과 일반 상품을 확인한다.")
@@ -45,7 +47,7 @@ class InventoryServiceTest {
     @DisplayName("프로모션 기간이 유효한 재고 및 프로모션이 없는 재고를 가져온다.")
     @Test
     void getInventoryItemsWithinValidPeriod() {
-        List<InventoryItem> inventoryItems = inventoryService.getInventoryItemsWithinValidPeriod();
+        List<InventoryItem> inventoryItems = inventoryService.getInventoryItemsWithinValidPeriod(DateTimes.now());
 
         assertEquals(16, inventoryItems.size());
         assertEquals("컵라면", inventoryItems.getLast().getProduct().getName());

@@ -9,11 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class AbstractFileReadService<T> {
-    protected final MarkdownFileReader markdownFileReader;
-
-    public AbstractFileReadService(MarkdownFileReader markdownFileReader) {
-        this.markdownFileReader = markdownFileReader;
-    }
+    private final MarkdownFileReader markdownFileReader = MarkdownFileReader.getInstance();
 
     protected abstract T mapToObject(List<String> line);
 

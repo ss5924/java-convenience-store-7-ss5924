@@ -1,5 +1,6 @@
 package store;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,14 +18,13 @@ class PromotionServiceTest {
 
     @BeforeEach
     void setUp() {
-        MarkdownFileReader markdownFileReader = new MarkdownFileReader();
-        promotionService = new PromotionService(markdownFileReader);
+        promotionService = new PromotionService();
     }
 
     @DisplayName("프로모션명으로 가져온 프로모션의 기간이 유효한지 확인 후 유효하지 않으면 예외가 발생한다.")
     @Test
     void getPromotionWithinValidPeriod() {
-        assertThatThrownBy(() -> promotionService.getPromotionWithinValidPeriod("기간만료프로모션"))
+        assertThatThrownBy(() -> promotionService.getPromotionWithinValidPeriod("기간만료프로모션", DateTimes.now()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
