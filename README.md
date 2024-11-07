@@ -80,6 +80,9 @@
 
 #### b. 비즈니스 로직 구현
 
+- **프로세스 1단계**
+- `주문(Order) 생성 -> 상품(Product) 확인 -> 재고(InventoryItem) 확인 -> 프로모션(Promotion) 확인 -> 멤버십(Membership) 확인 -> 구매(Purchase) 프로세스 진행`
+
 1. ProductService
     - 상품 정보 조회
 2. OrderService
@@ -106,6 +109,10 @@
     - 사용자 입력
 3. OutputView
     - 콘솔 출력
+4. OrderInputParser
+    - 입력값을 Order 객체로 파싱
+5. InputValidator
+    - 입력값에 대한 유효성 검사
 
 ## 다. 변경 사항
 
@@ -121,4 +128,5 @@
 ## 라. TODO LIST
 
 #### v1.0-SNAPSHOT - 2023-11-07
-- file write에 대한 처리 구조에 대한 고려가 필요함
+- 주문 이후 구매 프로세스 정의
+- file write 처리 구조 정의 (products.md 업데이트)
