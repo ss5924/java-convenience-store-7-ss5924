@@ -11,7 +11,6 @@ import store.product.ProductService;
 import store.promotion.PromotionService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +32,8 @@ class InventoryServiceTest {
     @DisplayName("상품명으로 재고를 가져와 프로모션 진행 상품과 일반 상품을 확인한다.")
     @Test
     void getInventoryItem() {
-        List<InventoryItem> inventoryItems = inventoryService.getInventoryItems("콜라");
+        Product product = new Product("콜라", 1000);
+        List<InventoryItem> inventoryItems = inventoryService.getInventoryItemsByProduct(product, now);
 
         assertEquals(2, inventoryItems.size());
         assertEquals("콜라", inventoryItems.getFirst().getProduct().getName());
@@ -42,21 +42,10 @@ class InventoryServiceTest {
         assertNull(inventoryItems.getLast().getPromotion());
     }
 
-    @Test
-    void getInventoryItemsByProductNames() {
-        List<String> productNames = new ArrayList<>();
-        productNames.add("콜라");
-        productNames.add("사이다");
-        productNames.add("감자칩");
-
-        List<InventoryItem> inventoryItems = inventoryService.getInventoryItems(productNames);
-        assertEquals(6, inventoryItems.size());
-    }
-
     @DisplayName("프로모션 기간이 유효한 재고 및 프로모션이 없는 재고를 가져온다.")
     @Test
     void getInventoryItemsWithinValidPeriod() {
-        List<InventoryItem> inventoryItems = inventoryService.getInventoryItemsWithinValidPeriod(DateTimes.now());
+        List<InventoryItem> inventoryItems = inventoryService.getInventoryItemsWithinValidPeriod(now);
 
         assertEquals(16, inventoryItems.size());
         assertEquals("컵라면", inventoryItems.getLast().getProduct().getName());
@@ -82,27 +71,10 @@ class InventoryServiceTest {
         assertEquals("기간만료프로모션", inventoryItems.getLast().getPromotion().getName());
     }
 
-    @DisplayName("상품의 프로모션이 진행되는 재고 갯수를 확인한다.")
-    @Test
-    void getCanApplyPromotionStockQuantity() {
-        int quantity = inventoryService.getCanApplyPromotionStockQuantity(cola, now);
-
-        assertEquals(10, quantity);
-    }
-
-    @DisplayName("상품중 프로모션이 진행되는 재고의 내용을 확인한다.")
-    @Test
-    void getPromotionStockItems() {
-        List<InventoryItem> items = inventoryService.getPromotionStockItems(cola, now);
-
-        assertEquals(1, items.size());
-        assertEquals("탄산2+1", items.get(0).getPromotion().getName());
-    }
-
     @DisplayName("상품의 전체 갯수를 확인한다.")
     @Test
     void getCanApplyTotalQuantity() {
-        int quantity = inventoryService.getCanApplyTotalQuantity(cola, now);
+        int quantity = inventoryService.getInventoryItemsByProduct(cola, now).stream().mapToInt(InventoryItem::getQuantity).sum();
 
         assertEquals(20, quantity);
     }

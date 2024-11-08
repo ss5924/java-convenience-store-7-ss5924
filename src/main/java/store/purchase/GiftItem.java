@@ -32,8 +32,8 @@ public class GiftItem implements Item {
     }
 
     @Override
-    public String getProductName() {
-        return this.product.getName();
+    public Product getProduct() {
+        return product;
     }
 
     @Override

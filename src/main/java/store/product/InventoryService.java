@@ -27,17 +27,19 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
     }
 
     public InventoryItem getInventoryItemsWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now) {
-        return getInventoryItemsWithPromotionByProduct(product, now).stream()
-                .filter(inventoryItem -> inventoryItem.getPromotion().equals(promotion))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
+        InventoryItem itemWithPromotion = getInventoryItemWithPromotionByProduct(product, now);
+        if (!itemWithPromotion.getPromotion().equals(promotion)) {
+            throw new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다.");
+        }
+        return itemWithPromotion;
     }
 
     public List<InventoryItem> getInventoryItemsByProduct(Product product, LocalDateTime now) {
         InventoryItem itemWithoutPromotion = getInventoryItemsWithoutPromotionByProduct(product);
-        List<InventoryItem> itemsWithPromotion = getInventoryItemsWithPromotionByProduct(product, now);
+        InventoryItem itemWithPromotion = getInventoryItemWithPromotionByProduct(product, now);
 
         List<InventoryItem> result = new ArrayList<>();
-        result.addAll(itemsWithPromotion);
+        result.add(itemWithPromotion);
         result.add(itemWithoutPromotion);
 
         return result;
@@ -49,10 +51,17 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
     }
 
-    public List<InventoryItem> getInventoryItemsWithPromotionByProduct(Product product, LocalDateTime now) {
+    public InventoryItem getInventoryItemWithPromotionByProduct(Product product, LocalDateTime now) {
         return getInventoryItemsWithPromotion(now).stream()
                 .filter(inventoryItem -> inventoryItem.getProduct().equals(product))
-                .toList();
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
+    }
+
+    public List<InventoryItem> getInventoryItemsWithinValidPeriod(LocalDateTime now) {
+        List<InventoryItem> result = new ArrayList<>();
+        result.addAll(getInventoryItemsWithPromotion(now));
+        result.addAll(getInventoryItemsWithoutPromotion());
+        return result;
     }
 
     public List<InventoryItem> getInventoryItemsWithoutPromotion() {

@@ -1,7 +1,9 @@
 package store.purchase;
 
+import store.product.Product;
+
 public interface Item {
-    String getProductName();
+    Product getProduct();
 
     int getQuantity();
 
