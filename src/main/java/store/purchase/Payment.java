@@ -17,11 +17,11 @@ public class Payment {
 
     private void validate(List<Item> purchaseItems, List<Item> giftItems) {
         if (purchaseItems == null) {
-            throw new IllegalArgumentException("[ERROR] 구매 물품은 null이 될 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] list는 null이 될 수 없습니다.");
         }
 
         if (giftItems == null) {
-            throw new IllegalArgumentException("[ERROR] 구매 물품은 null이 될 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] list는 null이 될 수 없습니다.");
         }
     }
 

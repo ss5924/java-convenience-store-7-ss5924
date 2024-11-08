@@ -21,17 +21,11 @@ public class PurchaseSummary {
     }
 
     public Item toPurchaseItem() {
-        if (actualPurchaseQuantity > 0) {
-            return new PurchaseItem(product, actualPurchaseQuantity);
-        }
-        return null;
+        return new PurchaseItem(product, actualPurchaseQuantity);
     }
 
     public Item toGiftItem() {
-        if (eligibleFreeItems > 0) {
-            return new GiftItem(product, actualPurchaseQuantity);
-        }
-        return null;
+        return new GiftItem(product, potentialGiftItems);
     }
 
     private void calculateSummary(int orderedQuantity, int promotionStock, int noPromotionStock) {
