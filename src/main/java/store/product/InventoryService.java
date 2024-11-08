@@ -18,48 +18,52 @@ public class InventoryService extends AbstractFileReadService<InventoryItem> {
         this.promotionService = promotionService;
     }
 
-    public List<InventoryItem> getInventoryItems(String productName) {
-        return getAllInventoryItems().stream()
-                .filter(inventoryItem -> inventoryItem.getProduct().getName().equals(productName))
-                .toList();
+    public int getStockAvailableWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now, int orderedQuantity) {
+        boolean isAvailableForGift = promotion.isAvailableForGift(orderedQuantity);
+        if (!isAvailableForGift) {
+            return 0;
+        }
+        return getInventoryItemsWithPromotionByProductAndPromotion(product, promotion, now).getQuantity();
     }
 
-    public int getCanApplyPromotionStockQuantity(Product product, LocalDateTime now) {
-        return getPromotionStockItems(product, now).stream()
-                .mapToInt(InventoryItem::getQuantity).sum();
+    public InventoryItem getInventoryItemsWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now) {
+        return getInventoryItemsWithPromotionByProduct(product, now).stream()
+                .filter(inventoryItem -> inventoryItem.getPromotion().equals(promotion))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
     }
 
-    public List<InventoryItem> getPromotionStockItems(Product product, LocalDateTime now) {
-        return getInventoryItemsWithinValidPeriod(product, now).stream()
-                .filter(inventoryItem -> inventoryItem.getPromotion() != null).toList();
+    public List<InventoryItem> getInventoryItemsByProduct(Product product, LocalDateTime now) {
+        InventoryItem itemWithoutPromotion = getInventoryItemsWithoutPromotionByProduct(product);
+        List<InventoryItem> itemsWithPromotion = getInventoryItemsWithPromotionByProduct(product, now);
+
+        List<InventoryItem> result = new ArrayList<>();
+        result.addAll(itemsWithPromotion);
+        result.add(itemWithoutPromotion);
+
+        return result;
     }
 
-    public int getCanApplyTotalQuantity(Product product, LocalDateTime now) {
-        return getInventoryItemsWithinValidPeriod(product, now).stream()
-                .mapToInt(InventoryItem::getQuantity).sum();
+    public InventoryItem getInventoryItemsWithoutPromotionByProduct(Product product) {
+        return getInventoryItemsWithoutPromotion().stream()
+                .filter(inventoryItem -> inventoryItem.getProduct().equals(product))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
     }
 
-    public List<InventoryItem> getInventoryItemsWithinValidPeriod(Product product, LocalDateTime now) {
-        return getInventoryItemsWithinValidPeriod(now).stream()
+    public List<InventoryItem> getInventoryItemsWithPromotionByProduct(Product product, LocalDateTime now) {
+        return getInventoryItemsWithPromotion(now).stream()
                 .filter(inventoryItem -> inventoryItem.getProduct().equals(product))
                 .toList();
     }
 
-    public List<InventoryItem> getInventoryItems(List<String> productNames) {
-        List<InventoryItem> inventoryItems = getAllInventoryItems();
-        List<InventoryItem> result = new ArrayList<>();
-        productNames.forEach(name -> {
-            result.addAll(inventoryItems.stream()
-                    .filter(inventoryItem -> inventoryItem.getProduct().getName().equals(name))
-                    .toList());
-        });
-        return result;
+    public List<InventoryItem> getInventoryItemsWithoutPromotion() {
+        return getAllInventoryItems().stream()
+                .filter(inventoryItem -> inventoryItem.getPromotion() == null).toList();
     }
 
-    public List<InventoryItem> getInventoryItemsWithinValidPeriod(LocalDateTime now) {
+    public List<InventoryItem> getInventoryItemsWithPromotion(LocalDateTime now) {
         return getAllInventoryItems().stream()
-                .filter(inventoryItem -> inventoryItem.getPromotion() == null
-                        || inventoryItem.getPromotion().isValidPeriod(now)).toList();
+                .filter(inventoryItem -> inventoryItem.getPromotion() != null
+                        && inventoryItem.getPromotion().isValidPeriod(now)).toList();
     }
 
     public List<InventoryItem> getAllInventoryItems() {

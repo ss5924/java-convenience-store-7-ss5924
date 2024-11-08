@@ -1,8 +1,6 @@
 package store.promotion;
 
 import store.common.AbstractFileReadService;
-import store.order.OrderItem;
-import store.product.InventoryItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +17,7 @@ public class PromotionService extends AbstractFileReadService<Promotion> {
 
     private Promotion getPromotionByName(String promotionName) {
         return getAllPromotions().stream()
-                .filter(promotion -> promotion.getName().equalsIgnoreCase(promotionName))
+                .filter(promotion -> promotion.getName().equals(promotionName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 프로모션입니다."));
     }

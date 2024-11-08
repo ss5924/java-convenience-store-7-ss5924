@@ -1,6 +1,7 @@
 package store.promotion;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Promotion {
     private final String name;
@@ -58,5 +59,23 @@ public class Promotion {
 
     public LocalDateTime getEndAt() {
         return endAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Promotion promotion = (Promotion) o;
+        return requiredCondition == promotion.requiredCondition
+                && giftQuantity == promotion.giftQuantity
+                && Objects.equals(name, promotion.name)
+                && Objects.equals(startAt, promotion.startAt)
+                && Objects.equals(endAt, promotion.endAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, requiredCondition, giftQuantity, startAt, endAt);
     }
 }
