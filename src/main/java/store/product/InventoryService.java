@@ -1,4 +1,8 @@
-package store;
+package store.product;
+
+import store.common.AbstractFileReadService;
+import store.promotion.Promotion;
+import store.promotion.PromotionService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

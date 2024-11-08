@@ -2,6 +2,9 @@ package store;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import store.order.Order;
+import store.order.OrderInputParser;
+import store.product.ProductService;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;

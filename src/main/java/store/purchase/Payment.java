@@ -1,4 +1,4 @@
-package store;
+package store.purchase;
 
 import java.util.List;
 

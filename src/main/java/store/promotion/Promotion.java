@@ -1,4 +1,4 @@
-package store;
+package store.promotion;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +36,7 @@ public class Promotion {
         return this.startAt.isBefore(now) && this.endAt.isAfter(now);
     }
 
-    public boolean isAvailableGift(int orderedQuantity) {
+    public boolean isAvailableForGift(int orderedQuantity) {
         return orderedQuantity >= this.requiredCondition;
     }
 

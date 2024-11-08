@@ -4,6 +4,11 @@ import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.product.InventoryItem;
+import store.product.InventoryService;
+import store.product.Product;
+import store.product.ProductService;
+import store.promotion.PromotionService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

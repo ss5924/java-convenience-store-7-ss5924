@@ -1,6 +1,7 @@
 package store;
 
 import org.junit.jupiter.api.Test;
+import store.order.OrderItem;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

@@ -1,4 +1,7 @@
-package store;
+package store.order;
+
+import store.product.ProductService;
+import store.util.InputValidator;
 
 import java.util.Arrays;
 

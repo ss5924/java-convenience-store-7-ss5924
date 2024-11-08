@@ -2,6 +2,11 @@ package store;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import store.product.Product;
+import store.purchase.GiftItem;
+import store.purchase.Item;
+import store.purchase.Payment;
+import store.purchase.PurchaseItem;
 
 import java.util.ArrayList;
 import java.util.List;

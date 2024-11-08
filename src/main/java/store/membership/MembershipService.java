@@ -1,4 +1,4 @@
-package store;
+package store.membership;
 
 public class MembershipService {
     private static final double DISCOUNT_RATE = 0.3d;

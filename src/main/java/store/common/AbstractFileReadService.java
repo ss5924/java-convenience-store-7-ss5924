@@ -1,4 +1,6 @@
-package store;
+package store.common;
+
+import store.util.MarkdownFileReader;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

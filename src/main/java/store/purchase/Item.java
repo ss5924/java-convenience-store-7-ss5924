@@ -1,4 +1,4 @@
-package store;
+package store.purchase;
 
 public interface Item {
     String getProductName();

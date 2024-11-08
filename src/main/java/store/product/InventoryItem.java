@@ -1,4 +1,6 @@
-package store;
+package store.product;
+
+import store.promotion.Promotion;
 
 public class InventoryItem {
     private Product product;

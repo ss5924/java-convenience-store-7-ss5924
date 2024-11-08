@@ -2,6 +2,7 @@ package store;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.product.Product;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

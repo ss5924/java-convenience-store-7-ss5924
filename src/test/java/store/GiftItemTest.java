@@ -2,6 +2,8 @@ package store;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import store.product.Product;
+import store.purchase.GiftItem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

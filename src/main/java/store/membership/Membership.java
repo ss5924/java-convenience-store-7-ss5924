@@ -1,4 +1,4 @@
-package store;
+package store.membership;
 
 public class Membership {
     private int remainPoint;

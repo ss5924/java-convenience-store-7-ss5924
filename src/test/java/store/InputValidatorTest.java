@@ -1,6 +1,7 @@
 package store;
 
 import org.junit.jupiter.api.Test;
+import store.util.InputValidator;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

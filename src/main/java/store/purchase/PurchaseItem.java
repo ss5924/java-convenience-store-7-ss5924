@@ -1,10 +1,12 @@
-package store;
+package store.purchase;
 
-public class GiftItem implements Item {
+import store.product.Product;
+
+public class PurchaseItem implements Item {
     private Product product;
     private int quantity;
 
-    public GiftItem(Product product, int quantity) {
+    public PurchaseItem(Product product, int quantity) {
         validate(product, quantity);
         this.product = product;
         this.quantity = quantity;
@@ -20,13 +22,9 @@ public class GiftItem implements Item {
         }
     }
 
-    public int getDiscountAmount() {
-        return this.product.getPrice() * this.quantity;
-    }
-
     @Override
     public int getAmount() {
-        return 0;
+        return this.product.getPrice() * this.quantity;
     }
 
     @Override
@@ -37,5 +35,10 @@ public class GiftItem implements Item {
     @Override
     public int getQuantity() {
         return this.quantity;
+    }
+
+    @Override
+    public int getDiscountAmount() {
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 함수입니다.");
     }
 }

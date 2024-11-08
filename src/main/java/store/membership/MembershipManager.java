@@ -1,4 +1,4 @@
-package store;
+package store.membership;
 
 import java.util.concurrent.ConcurrentHashMap;
 

@@ -1,9 +1,10 @@
 package store;
 
-import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.promotion.Promotion;
+import store.promotion.PromotionService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,13 +20,6 @@ class PromotionServiceTest {
     @BeforeEach
     void setUp() {
         promotionService = new PromotionService();
-    }
-
-    @DisplayName("프로모션명으로 가져온 프로모션의 기간이 유효한지 확인 후 유효하지 않으면 예외가 발생한다.")
-    @Test
-    void getPromotionWithinValidPeriod() {
-        assertThatThrownBy(() -> promotionService.getPromotionWithinValidPeriod("기간만료프로모션", DateTimes.now()))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("존재하지 않는 프로모션명으로 프로모션을 가져오면 예외가 발생한다.")

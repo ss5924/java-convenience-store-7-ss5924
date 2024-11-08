@@ -3,6 +3,7 @@ package store;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.membership.MembershipManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

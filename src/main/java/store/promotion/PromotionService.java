@@ -1,4 +1,8 @@
-package store;
+package store.promotion;
+
+import store.common.AbstractFileReadService;
+import store.order.OrderItem;
+import store.product.InventoryItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,17 +24,8 @@ public class PromotionService extends AbstractFileReadService<Promotion> {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 프로모션입니다."));
     }
 
-    public Promotion getPromotionWithinValidPeriod(String promotionName, LocalDateTime basedDate) {
-        Promotion promotion = getPromotion(promotionName);
-
-        if (isNotValidPeriod(promotion, basedDate)) {
-            throw new IllegalArgumentException("[ERROR] 프로모션 진행 기간이 아닙니다.");
-        }
-        return promotion;
-    }
-
-    public boolean isNotValidPeriod(Promotion promotion, LocalDateTime basedDate) {
-        return basedDate.isBefore(promotion.getStartAt()) || basedDate.isAfter(promotion.getEndAt());
+    public List<Promotion> getAllPromotionsWithinValidPeriod(LocalDateTime now) {
+        return getAllPromotions().stream().filter(promotion -> promotion.isValidPeriod(now)).toList();
     }
 
     public List<Promotion> getAllPromotions() {
