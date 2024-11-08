@@ -1,5 +1,7 @@
 package store.purchase;
 
+import store.membership.MembershipService;
+
 import java.util.List;
 
 public class Payment {
@@ -24,26 +26,27 @@ public class Payment {
     }
 
     private void initialize(List<Item> purchaseItems, List<Item> giftItems) {
-        this.totalPurchaseAmount = calculateTotalPurchaseAmount(purchaseItems);
         this.promotionDiscountAmount = calculatePromotionDiscountAmount(giftItems);
-        this.membershipDiscountAmount = calculateMembershipDiscountAmount(totalPurchaseAmount, promotionDiscountAmount);
-        this.finalPaymentAmount = calculateFinalPaymentAmount(totalPurchaseAmount, promotionDiscountAmount, membershipDiscountAmount);
+        this.totalPurchaseAmount = calculateTotalPurchaseAmount(purchaseItems, promotionDiscountAmount);
+        this.finalPaymentAmount = calculateFinalPaymentAmount();
     }
 
-    private int calculateTotalPurchaseAmount(List<Item> purchaseItems) {
-        return purchaseItems.stream().mapToInt(Item::getAmount).sum();
+    private int calculateTotalPurchaseAmount(List<Item> purchaseItems, int promotionDiscountAmount) {
+        return purchaseItems.stream().mapToInt(Item::getAmount).sum() + promotionDiscountAmount;
     }
 
     private int calculatePromotionDiscountAmount(List<Item> giftItems) {
         return giftItems.stream().mapToInt(Item::getDiscountAmount).sum();
     }
 
-    private int calculateMembershipDiscountAmount(int totalPurchaseAmount, int promotionDiscountAmount) {
-        return (totalPurchaseAmount - promotionDiscountAmount) * 30 / 100;
+    private int calculateFinalPaymentAmount() {
+        return totalPurchaseAmount - promotionDiscountAmount - membershipDiscountAmount;
     }
 
-    private int calculateFinalPaymentAmount(int totalPurchaseAmount, int promotionDiscountAmount, int membershipDiscountAmount) {
-        return totalPurchaseAmount - promotionDiscountAmount - membershipDiscountAmount;
+    public void applyMembershipDiscount(MembershipService membershipService, String userId) {
+        int calculatedDiscount = membershipService.calculateMembershipDiscount(totalPurchaseAmount - promotionDiscountAmount);
+        this.membershipDiscountAmount = membershipService.applyMembershipDiscount(userId, calculatedDiscount);
+        this.finalPaymentAmount = calculateFinalPaymentAmount();
     }
 
     public int getTotalPurchaseAmount() {
