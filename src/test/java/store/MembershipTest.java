@@ -1,18 +1,18 @@
 package store;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MembershipTest {
 
+    @DisplayName("한도를 초과한 금액을 요청하면 한도선 내에서 할인금액을 반환한다.")
     @Test
-    void 사용금액이_8000원을_초과하면_예외가_발생한다() {
-        assertDoesNotThrow(() -> new Membership(8000));
+    void applyMembershipDiscount() {
+        int discountPoint = new Membership(8000).applyMembershipDiscount(8001);
 
-        assertThatThrownBy(() -> new Membership(8001))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertEquals(8000, discountPoint);
     }
 
 }
