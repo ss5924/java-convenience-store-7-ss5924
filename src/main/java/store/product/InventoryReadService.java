@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryService extends AbstractFileReadService<InventoryItem> {
+public class InventoryReadService extends AbstractFileReadService<InventoryItem> {
     private static final String PRODUCT_FILE_PATH = "src/main/resources/products.md";
     private final ProductService productService;
     private final PromotionService promotionService;
 
-    public InventoryService(ProductService productService, PromotionService promotionService) {
+    public InventoryReadService(ProductService productService, PromotionService promotionService) {
         this.productService = productService;
         this.promotionService = promotionService;
     }

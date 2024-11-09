@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MarkdownFileReader {
+    protected static final String REGEX = ",";
     private static final MarkdownFileReader instance = new MarkdownFileReader();
-    private static final String REGEX = ",";
 
     private MarkdownFileReader() {
     }
@@ -35,16 +35,16 @@ public class MarkdownFileReader {
                 data.add(parseCsvLine(line));
             }
         } catch (IOException e) {
-            throw new IllegalArgumentException("[ERROR] 올바른 파일 경로를 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] 파일을 읽는 도중 문제가 발생했습니다.");
         }
         return data;
     }
 
-    private List<String> parseCsvLine(String line) {
+    protected List<String> parseCsvLine(String line) {
         return parseLine(line, REGEX);
     }
 
-    private List<String> parseLine(String line, String regex) {
+    protected List<String> parseLine(String line, String regex) {
         return new ArrayList<>(Arrays.asList(line.split(regex)));
     }
 
