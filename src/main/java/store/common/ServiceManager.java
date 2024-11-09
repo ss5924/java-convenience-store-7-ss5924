@@ -6,6 +6,7 @@ import store.input.PromptInputMessageManager;
 import store.membership.MembershipManager;
 import store.membership.MembershipService;
 import store.product.InventoryReadService;
+import store.product.InventoryUpdateManager;
 import store.product.InventoryWriteService;
 import store.product.ProductService;
 import store.promotion.PromotionService;
@@ -26,6 +27,7 @@ public class ServiceManager {
     private final PromptInputMessageManager promptInputMessageManager;
     private final InputToOrderConverter inputToOrderConverter;
     private final InventoryWriteService inventoryWriteService;
+    private final InventoryUpdateManager inventoryUpdateManager;
 
     public ServiceManager() {
         this.membershipManager = new MembershipManager();
@@ -40,6 +42,7 @@ public class ServiceManager {
         this.promptInputMessageManager = new PromptInputMessageManager(outputMessageManager);
         this.inputToOrderConverter = new InputToOrderConverter(productService);
         this.inventoryWriteService = new InventoryWriteService();
+        this.inventoryUpdateManager = new InventoryUpdateManager(inventoryWriteService);
     }
 
     public MembershipManager getMembershipManager() {
@@ -88,5 +91,9 @@ public class ServiceManager {
 
     public InventoryWriteService getInventoryWriteService() {
         return inventoryWriteService;
+    }
+
+    public InventoryUpdateManager getInventoryUpdateManager() {
+        return inventoryUpdateManager;
     }
 }

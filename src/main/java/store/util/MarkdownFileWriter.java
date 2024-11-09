@@ -7,6 +7,7 @@ import java.util.List;
 
 public class MarkdownFileWriter {
     protected static final String REGEX = ",";
+    private static final String COLUMN_HEADER = "name,price,quantity,promotion";
     private static final MarkdownFileWriter instance = new MarkdownFileWriter();
 
     private MarkdownFileWriter() {
@@ -18,6 +19,8 @@ public class MarkdownFileWriter {
 
     public void writeMarkdownFile(String filePath, List<List<String>> data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(COLUMN_HEADER);
+            writer.newLine();
             for (List<String> lineData : data) {
                 String line = String.join(REGEX, lineData);
                 writer.write(line);

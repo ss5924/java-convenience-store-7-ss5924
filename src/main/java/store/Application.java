@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.ServiceManager;
 import store.input.PromptInputMessageManager;
 import store.order.Order;
+import store.product.InventoryItem;
 import store.product.Product;
 import store.purchase.PurchaseSummary;
 import store.purchase.Receipt;
@@ -92,8 +93,8 @@ public class Application {
     }
 
     private void updateInventoryAndPrintReceipt(List<PurchaseSummary> summaries, boolean isMembershipDiscount) {
-        // TODO: 재고 업데이트 로직
-
+        List<InventoryItem> allItems = serviceManager.getInventoryReadService().getAllInventoryItems();
+        serviceManager.getInventoryUpdateManager().updateInventoryFromSummaries(allItems, summaries);
 
         Receipt receipt = serviceManager.getPurchaseService().createReceipt(summaries, isMembershipDiscount);
         serviceManager.getOutputMessageManager().printReceipt(receipt);

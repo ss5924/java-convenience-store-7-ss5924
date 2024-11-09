@@ -32,6 +32,7 @@ public class PurchaseSummary {
     public void updateNonDiscountedQuantityWithOrderOption(boolean isNonDiscountedQuantity) {
         if (!isNonDiscountedQuantity) {
             this.actualPurchaseQuantity -= this.nonDiscountedQuantity;
+            this.remainingNoPromotionStock += this.nonDiscountedQuantity; // todo
             this.nonDiscountedQuantity = 0;
         }
     }
@@ -69,28 +70,37 @@ public class PurchaseSummary {
     }
 
     private int getGiftSets(int orderedQuantity, int availableStock) {
+        if (promotion == null) {
+            return 0;
+        }
         return Math.min(orderedQuantity / (promotion.getRequiredCondition() + promotion.getGiftQuantity()),
                 availableStock / (promotion.getRequiredCondition() + promotion.getGiftQuantity()));
     }
 
     private int getActualPurchaseQuantity(int orderedQuantity, int giftSets) {
-        int potentialGiftItems = giftSets * promotion.getGiftQuantity();
+        int potentialGiftItems = getPotentialGiftItems(giftSets);
         return orderedQuantity - potentialGiftItems;
     }
 
     private int getPotentialGiftItems(int giftSets) {
+        if (promotion == null) {
+            return 0;
+        }
         return giftSets * promotion.getGiftQuantity();
     }
 
     private int getEligibleFreeItems(int orderedQuantity, int remainingStock) {
-        if (orderedQuantity % promotion.getRequiredCondition() == 0 && remainingStock > 0) {
+        if (promotion != null && orderedQuantity % promotion.getRequiredCondition() == 0 && remainingStock > 0) {
             return promotion.getGiftQuantity();
         }
         return 0;
     }
 
     private int getNonDiscountedQuantity(int orderedQuantity, int actualProcessOrderedQuantity, int giftSets, int noPromotionStock) {
-        int discountedQuantity = giftSets * (promotion.getRequiredCondition() + promotion.getGiftQuantity());
+        int discountedQuantity = 0;
+        if (promotion != null) {
+            discountedQuantity = giftSets * (promotion.getRequiredCondition() + promotion.getGiftQuantity());
+        }
         int insufficientPromotionStockQuantity = Math.max(0, actualProcessOrderedQuantity - discountedQuantity);
         int remainingOrderedQuantity = orderedQuantity - actualProcessOrderedQuantity;
         int nonPromotionQuantity = Math.min(remainingOrderedQuantity, noPromotionStock);
@@ -123,5 +133,9 @@ public class PurchaseSummary {
 
     public int getNonDiscountedQuantity() {
         return nonDiscountedQuantity;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
     }
 }

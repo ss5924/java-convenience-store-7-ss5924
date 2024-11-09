@@ -35,14 +35,7 @@ public class InventoryReadService extends AbstractFileReadService<InventoryItem>
     }
 
     public List<InventoryItem> getInventoryItemsByProduct(Product product, LocalDateTime now) {
-        InventoryItem itemWithoutPromotion = getInventoryItemsWithoutPromotionByProduct(product);
-        InventoryItem itemWithPromotion = getInventoryItemWithPromotionByProduct(product, now);
-
-        List<InventoryItem> result = new ArrayList<>();
-        result.add(itemWithPromotion);
-        result.add(itemWithoutPromotion);
-
-        return result;
+        return getAllInventoryItems().stream().filter(item -> item.getProduct().equals(product)).toList();
     }
 
     public InventoryItem getInventoryItemsWithoutPromotionByProduct(Product product) {

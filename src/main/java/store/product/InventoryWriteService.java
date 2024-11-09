@@ -12,7 +12,7 @@ public class InventoryWriteService extends AbstractFileWriteService<InventoryIte
         inventoryItems.stream()
                 .filter(item -> item.getProduct().equals(updatedItem.getProduct()))
                 .findFirst()
-                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity())));
+                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity()))); // 차감 로직
     }
 
     public void updateInventoryItemQuantityWithPromotion(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
@@ -20,7 +20,7 @@ public class InventoryWriteService extends AbstractFileWriteService<InventoryIte
                 .filter(item -> item.getProduct().equals(updatedItem.getProduct())
                         && item.getPromotion().equals(updatedItem.getPromotion()))
                 .findFirst()
-                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity())));
+                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity()))); // 차감 로직
     }
 
     public void saveInventoryItems(List<InventoryItem> inventoryItems) {
@@ -33,11 +33,7 @@ public class InventoryWriteService extends AbstractFileWriteService<InventoryIte
         strings.add(item.getProduct().getName());
         strings.add(String.valueOf(item.getProduct().getPrice()));
         strings.add(String.valueOf(item.getQuantity()));
-        if (item.getPromotion() == null) {
-            strings.add("null");
-        } else {
-            strings.add(item.getPromotion().getName());
-        }
+        strings.add(item.getPromotion() == null ? "null" : item.getPromotion().getName());
 
         return strings;
     }
