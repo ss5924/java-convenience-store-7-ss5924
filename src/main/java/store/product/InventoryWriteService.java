@@ -8,12 +8,19 @@ import java.util.List;
 public class InventoryWriteService extends AbstractFileWriteService<InventoryItem> {
     private static final String PRODUCT_FILE_PATH = "src/main/resources/products.md";
 
-    public void updateInventoryItemQuantity(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
+    public void updateInventoryItemQuantityWithoutPromotion(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
+        inventoryItems.stream()
+                .filter(item -> item.getProduct().equals(updatedItem.getProduct()))
+                .findFirst()
+                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity())));
+    }
+
+    public void updateInventoryItemQuantityWithPromotion(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
         inventoryItems.stream()
                 .filter(item -> item.getProduct().equals(updatedItem.getProduct())
                         && item.getPromotion().equals(updatedItem.getPromotion()))
                 .findFirst()
-                .ifPresent(item -> item.setQuantity(updatedItem.getQuantity()));
+                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity())));
     }
 
     public void saveInventoryItems(List<InventoryItem> inventoryItems) {

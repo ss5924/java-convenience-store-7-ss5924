@@ -20,6 +20,22 @@ public class PurchaseSummary {
         calculateSummary(orderedQuantity, promotionStock, noPromotionStock);
     }
 
+    public void updateEligibleFreeItemsWithOrderOption(boolean isEligibleFreeItem) {
+        if (isEligibleFreeItem && remainingPromotionStock >= 1) {
+            this.eligibleFreeItems = 0;
+            this.nonDiscountedQuantity = 0;
+            this.potentialGiftItems = 1;
+            this.remainingPromotionStock -= 1;
+        }
+    }
+
+    public void updateNonDiscountedQuantityWithOrderOption(boolean isNonDiscountedQuantity) {
+        if (!isNonDiscountedQuantity) {
+            this.actualPurchaseQuantity -= this.nonDiscountedQuantity;
+            this.nonDiscountedQuantity = 0;
+        }
+    }
+
     public Item toPurchaseItem() {
         return new PurchaseItem(product, actualPurchaseQuantity);
     }

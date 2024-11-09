@@ -33,7 +33,7 @@ class PaymentFactoryTest {
         Product product = new Product("콜라", 1000);
         purchaseItems.add(new PurchaseItem(product, 2));
 
-        Payment payment = paymentFactory.create(purchaseItems, giftItems, membershipService, "1");
+        Payment payment = paymentFactory.create(purchaseItems, giftItems, membershipService, "1", true);
 
         assertEquals(2000, payment.getTotalPurchaseAmount());
         assertEquals(0, payment.getPromotionDiscountAmount());
@@ -51,7 +51,7 @@ class PaymentFactoryTest {
         purchaseItems.add(new PurchaseItem(product, 2));
         giftItems.add(new GiftItem(product, 1));
 
-        Payment payment = paymentFactory.create(purchaseItems, giftItems, membershipService, "1");
+        Payment payment = paymentFactory.create(purchaseItems, giftItems, membershipService, "1", true);
 
         assertEquals(3000, payment.getTotalPurchaseAmount());
         assertEquals(1000, payment.getPromotionDiscountAmount());

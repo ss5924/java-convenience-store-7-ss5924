@@ -39,4 +39,19 @@ public class InventoryItem {
     public Promotion getPromotion() {
         return promotion;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(product.getName()).append(" ").append(product.getPrice()).append("원 ");
+        if (quantity > 0) {
+            sb.append(quantity).append("개");
+        } else {
+            sb.append("재고 없음");
+        }
+        if (promotion != null) {
+            sb.append(" ").append(promotion.getName());
+        }
+        return sb.toString();
+    }
 }
