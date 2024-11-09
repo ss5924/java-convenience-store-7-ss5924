@@ -4,7 +4,6 @@ import store.membership.MembershipService;
 import store.order.Order;
 import store.product.InventoryReadService;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +56,8 @@ public class PurchaseService {
         return paymentFactory.create(purchaseItems, giftItems, membershipService, userId, isMembershipDiscount);
     }
 
-    public List<PurchaseSummary> createPurchaseSummaries(Order order, LocalDateTime now) {
-        return purchaseSummaryFactory.createPurchaseSummaries(order, inventoryReadService, now);
+    public List<PurchaseSummary> createPurchaseSummaries(Order order) {
+        return purchaseSummaryFactory.createPurchaseSummaries(order, inventoryReadService);
     }
 
 }

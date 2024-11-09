@@ -7,10 +7,10 @@ import store.purchase.Receipt;
 
 import java.util.List;
 
-public class PromptMessageManager {
+public class PromptHandler {
     private final InventoryReadService inventoryReadService;
 
-    public PromptMessageManager(InventoryReadService inventoryReadService) {
+    public PromptHandler(InventoryReadService inventoryReadService) {
         this.inventoryReadService = inventoryReadService;
     }
 

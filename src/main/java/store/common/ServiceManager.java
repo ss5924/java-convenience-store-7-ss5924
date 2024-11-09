@@ -1,7 +1,7 @@
 package store.common;
 
 import store.io.InputToOrderConverter;
-import store.io.PromptMessageManager;
+import store.io.PromptHandler;
 import store.membership.MembershipManager;
 import store.membership.MembershipService;
 import store.order.OrderService;
@@ -23,7 +23,7 @@ public class ServiceManager {
     private final PaymentFactory paymentFactory;
     private final PurchaseSummaryFactory purchaseSummaryFactory;
     private final PurchaseService purchaseService;
-    private final PromptMessageManager promptMessageManager;
+    private final PromptHandler promptHandler;
     private final InputToOrderConverter inputToOrderConverter;
     private final InventoryWriteService inventoryWriteService;
     private final InventoryUpdateManager inventoryUpdateManager;
@@ -38,7 +38,7 @@ public class ServiceManager {
         this.paymentFactory = new PaymentFactory();
         this.purchaseSummaryFactory = new PurchaseSummaryFactory();
         this.purchaseService = new PurchaseService(membershipService, inventoryReadService, paymentFactory, purchaseSummaryFactory);
-        this.promptMessageManager = new PromptMessageManager(inventoryReadService);
+        this.promptHandler = new PromptHandler(inventoryReadService);
         this.inputToOrderConverter = new InputToOrderConverter(productService);
         this.inventoryWriteService = new InventoryWriteService();
         this.inventoryUpdateManager = new InventoryUpdateManager(inventoryWriteService);
@@ -77,8 +77,8 @@ public class ServiceManager {
         return purchaseService;
     }
 
-    public PromptMessageManager getPromptInputMessageManager() {
-        return promptMessageManager;
+    public PromptHandler getPromptInputMessageManager() {
+        return promptHandler;
     }
 
     public InputToOrderConverter getInputToOrderConverter() {
@@ -93,8 +93,8 @@ public class ServiceManager {
         return inventoryUpdateManager;
     }
 
-    public PromptMessageManager getPromptMessageManager() {
-        return promptMessageManager;
+    public PromptHandler getPromptHandler() {
+        return promptHandler;
     }
 
     public OrderService getOrderService() {

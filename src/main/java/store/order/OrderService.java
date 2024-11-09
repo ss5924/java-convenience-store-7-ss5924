@@ -3,8 +3,6 @@ package store.order;
 import store.io.InputToOrderConverter;
 import store.product.InventoryReadService;
 
-import java.time.LocalDateTime;
-
 public class OrderService {
     private final InventoryReadService inventoryReadService;
     private final InputToOrderConverter inputToOrderConverter;
@@ -14,10 +12,10 @@ public class OrderService {
         this.inputToOrderConverter = inputToOrderConverter;
     }
 
-    public Order createOrder(String input, LocalDateTime now) {
+    public Order createOrder(String input) {
         Order order = inputToOrderConverter.convertToOrder(input);
         order.getOrderItems().forEach(orderItem -> {
-            int availableStock = inventoryReadService.getStockByProduct(orderItem.getProduct(), now);
+            int availableStock = inventoryReadService.getStockByProduct(orderItem.getProduct());
             validateStockAvailability(orderItem.getQuantity(), availableStock);
         });
         return order;

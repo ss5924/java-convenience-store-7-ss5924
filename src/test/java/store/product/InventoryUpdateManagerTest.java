@@ -1,6 +1,5 @@
 package store.product;
 
-import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ class InventoryUpdateManagerTest {
         order.addOrderItems(new OrderItem(new Product("사이다", 1000), 3));
 
         List<PurchaseSummary> summaries = serviceManager.getPurchaseSummaryFactory()
-                .createPurchaseSummaries(order, serviceManager.getInventoryReadService(), DateTimes.now());
+                .createPurchaseSummaries(order, serviceManager.getInventoryReadService());
 
         serviceManager.getInventoryUpdateManager().updateInventoryFromSummaries(inventoryItems, summaries);
     }
