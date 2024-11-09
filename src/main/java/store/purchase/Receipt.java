@@ -1,5 +1,7 @@
 package store.purchase;
 
+import java.text.NumberFormat;
+
 public class Receipt {
     private Purchase purchase;
 
@@ -10,6 +12,8 @@ public class Receipt {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        NumberFormat numberFormat = NumberFormat.getInstance();
+
         sb.append("==============W 편의점================\n");
         sb.append("상품명\t\t수량\t금액\n");
 
@@ -31,10 +35,10 @@ public class Receipt {
         sb.append("====================================\n");
 
         Payment payment = purchase.getPayment();
-        sb.append("총구매액\t\t").append(payment.getTotalPurchaseAmount()).append("\n");
-        sb.append("행사할인\t\t-").append(payment.getPromotionDiscountAmount()).append("\n");
-        sb.append("멤버십할인\t\t-").append(payment.getMembershipDiscountAmount()).append("\n");
-        sb.append("내실돈\t\t").append(payment.getFinalPaymentAmount()).append("\n");
+        sb.append("총구매액\t\t").append(numberFormat.format(payment.getTotalPurchaseAmount())).append("\n");
+        sb.append("행사할인\t\t-").append(numberFormat.format(payment.getPromotionDiscountAmount())).append("\n");
+        sb.append("멤버십할인\t\t-").append(numberFormat.format(payment.getMembershipDiscountAmount())).append("\n");
+        sb.append("내실돈\t\t").append(numberFormat.format(payment.getFinalPaymentAmount())).append("\n");
 
         return sb.toString();
     }

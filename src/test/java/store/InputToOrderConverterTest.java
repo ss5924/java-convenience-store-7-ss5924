@@ -3,7 +3,7 @@ package store;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.order.Order;
-import store.input.InputToOrderConverter;
+import store.io.InputToOrderConverter;
 import store.product.ProductService;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

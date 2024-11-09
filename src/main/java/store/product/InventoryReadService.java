@@ -18,12 +18,8 @@ public class InventoryReadService extends AbstractFileReadService<InventoryItem>
         this.promotionService = promotionService;
     }
 
-    public int getStockAvailableWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now, int orderedQuantity) {
-        boolean isAvailableForGift = promotion.isAvailableForGift(orderedQuantity);
-        if (!isAvailableForGift) {
-            return 0;
-        }
-        return getInventoryItemsWithPromotionByProductAndPromotion(product, promotion, now).getQuantity();
+    public int getStockByProduct(Product product, LocalDateTime now) {
+        return getInventoryItemsByProduct(product, now).stream().mapToInt(InventoryItem::getQuantity).sum();
     }
 
     public InventoryItem getInventoryItemsWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now) {

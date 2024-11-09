@@ -1,4 +1,4 @@
-package store.input;
+package store.io;
 
 import store.order.Order;
 import store.order.OrderItem;

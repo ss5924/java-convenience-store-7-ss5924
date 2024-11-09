@@ -2,19 +2,21 @@ package store.product;
 
 import store.promotion.Promotion;
 
+import java.text.NumberFormat;
+
 public class InventoryItem {
     private Product product;
     private int quantity;
     private Promotion promotion;
 
     public InventoryItem(Product product, int quantity, Promotion promotion) {
-        validate(product, quantity, promotion);
+        validate(product, quantity);
         this.product = product;
         this.quantity = quantity;
         this.promotion = promotion;
     }
 
-    private void validate(Product product, int quantity, Promotion promotion) {
+    private void validate(Product product, int quantity) {
         if (product == null) {
             throw new IllegalArgumentException("[ERROR] 주문 물품은 null이 될 수 없습니다.");
         }
@@ -43,7 +45,9 @@ public class InventoryItem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(product.getName()).append(" ").append(product.getPrice()).append("원 ");
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        sb.append("- ").append(product.getName()).append(" ").append(numberFormat.format(product.getPrice())).append("원 ");
         if (quantity > 0) {
             sb.append(quantity).append("개");
         } else {

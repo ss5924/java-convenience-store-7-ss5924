@@ -53,9 +53,9 @@ class PurchaseServiceTest {
         order.addOrderItems(new OrderItem(new Product("콜라", 1000), 2));
         order.addOrderItems(new OrderItem(new Product("사이다", 1000), 2));
 
-//        Receipt receipt = purchaseService.createReceipt(order, now);
-//
-//        System.out.println(receipt);
+        Receipt receipt = purchaseService.createReceipt(purchaseSummaries, "userid", true);
+
+        System.out.println(receipt);
     }
 
     @DisplayName("영수증을 출력한다. - gift 있음")
@@ -68,8 +68,8 @@ class PurchaseServiceTest {
         order.addOrderItems(new OrderItem(new Product("콜라", 1000), 3));
         order.addOrderItems(new OrderItem(new Product("사이다", 1000), 3));
 
-//        Receipt receipt = purchaseService.createReceipt(order, now);
-//
-//        System.out.println(receipt);
+        Receipt receipt = purchaseService.createReceipt(purchaseSummaries, "userid", true);
+
+        System.out.println(receipt);
     }
 }

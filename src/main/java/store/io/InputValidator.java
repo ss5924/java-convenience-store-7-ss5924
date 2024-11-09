@@ -1,4 +1,4 @@
-package store.input;
+package store.io;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

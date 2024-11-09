@@ -2,7 +2,7 @@ package store;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.ServiceManager;
-import store.input.PromptInputMessageManager;
+import store.io.PromptMessageManager;
 import store.order.Order;
 import store.product.InventoryItem;
 import store.product.Product;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class Application {
     private final ServiceManager serviceManager = new ServiceManager();
     private final LocalDateTime now = DateTimes.now();
+    private static final String USER_ID = "SAMPLE_USER_ID_1";
 
     public static void main(String[] args) {
         new Application().run();
@@ -25,9 +26,10 @@ public class Application {
     public void run() {
         boolean continueShopping = true;
         while (continueShopping) {
-            serviceManager.getOutputMessageManager().printIntro();
+            serviceManager.getPromptInputMessageManager().printIntro();
 
-            Order order = getOrderFromUserInput();
+            Order order = promptOrderUntilValidStock();
+
             List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order, now);
             updateSummariesWithAdditionalOptions(summaries);
 
@@ -39,9 +41,19 @@ public class Application {
         System.out.println("감사합니다! W편의점을 이용해 주셔서 감사합니다.");
     }
 
+    private Order promptOrderUntilValidStock() {
+        while (true) {
+            try {
+                return getOrderFromUserInput();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     private Order getOrderFromUserInput() {
         String input = serviceManager.getPromptInputMessageManager().getUserResponseOrder();
-        return serviceManager.getInputToOrderConverter().convertToOrder(input);
+        return serviceManager.getOrderService().createOrder(input, now);
     }
 
     private void updateSummariesWithAdditionalOptions(List<PurchaseSummary> summaries) {
@@ -59,7 +71,7 @@ public class Application {
 
         eligibleFreeItems.forEach((product, quantity) -> {
             if (quantity > 0) {
-                String eligibleFreeItemsYorN = PromptInputMessageManager.promptFreeItemOffer(product.getName());
+                String eligibleFreeItemsYorN = PromptMessageManager.promptFreeItemOffer(product.getName());
                 summaries.stream()
                         .filter(p -> p.getProduct().equals(product))
                         .findFirst()
@@ -78,7 +90,7 @@ public class Application {
 
         nonDiscountedProducts.forEach((product, quantity) -> {
             if (quantity > 0) {
-                String nonDiscountedPurchaseYorN = PromptInputMessageManager.promptNonDiscountedPurchase(product.getName(), quantity);
+                String nonDiscountedPurchaseYorN = PromptMessageManager.promptNonDiscountedPurchase(product.getName(), quantity);
                 summaries.stream()
                         .filter(p -> p.getProduct().equals(product))
                         .findFirst()
@@ -88,7 +100,7 @@ public class Application {
     }
 
     private boolean isMembershipDiscount() {
-        String membershipYorN = PromptInputMessageManager.promptMembershipDiscount();
+        String membershipYorN = PromptMessageManager.promptMembershipDiscount();
         return membershipYorN.equals("Y");
     }
 
@@ -96,12 +108,12 @@ public class Application {
         List<InventoryItem> allItems = serviceManager.getInventoryReadService().getAllInventoryItems();
         serviceManager.getInventoryUpdateManager().updateInventoryFromSummaries(allItems, summaries);
 
-        Receipt receipt = serviceManager.getPurchaseService().createReceipt(summaries, isMembershipDiscount);
-        serviceManager.getOutputMessageManager().printReceipt(receipt);
+        Receipt receipt = serviceManager.getPurchaseService().createReceipt(summaries, USER_ID, isMembershipDiscount);
+        serviceManager.getPromptInputMessageManager().printReceipt(receipt);
     }
 
     private boolean promptForAdditionalPurchase() {
-        String additionalYorN = PromptInputMessageManager.promptForAdditionalPurchase();
+        String additionalYorN = PromptMessageManager.promptForAdditionalPurchase();
         return additionalYorN.equals("Y");
     }
 

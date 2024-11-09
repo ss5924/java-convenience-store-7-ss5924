@@ -17,7 +17,15 @@ public class PurchaseSummary {
         this.product = product;
         this.promotion = promotion;
 
+        validate(orderedQuantity, promotionStock, noPromotionStock);
+
         calculateSummary(orderedQuantity, promotionStock, noPromotionStock);
+    }
+
+    private void validate(int orderedQuantity, int promotionStock, int noPromotionStock) {
+        if(orderedQuantity > promotionStock + noPromotionStock) {
+            throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다.");
+        }
     }
 
     public void updateEligibleFreeItemsWithOrderOption(boolean isEligibleFreeItem) {

@@ -1,10 +1,10 @@
 package store.common;
 
-import store.input.InputToOrderConverter;
-import store.input.OutputMessageManager;
-import store.input.PromptInputMessageManager;
+import store.io.InputToOrderConverter;
+import store.io.PromptMessageManager;
 import store.membership.MembershipManager;
 import store.membership.MembershipService;
+import store.order.OrderService;
 import store.product.InventoryReadService;
 import store.product.InventoryUpdateManager;
 import store.product.InventoryWriteService;
@@ -23,11 +23,11 @@ public class ServiceManager {
     private final PaymentFactory paymentFactory;
     private final PurchaseSummaryFactory purchaseSummaryFactory;
     private final PurchaseService purchaseService;
-    private final OutputMessageManager outputMessageManager;
-    private final PromptInputMessageManager promptInputMessageManager;
+    private final PromptMessageManager promptMessageManager;
     private final InputToOrderConverter inputToOrderConverter;
     private final InventoryWriteService inventoryWriteService;
     private final InventoryUpdateManager inventoryUpdateManager;
+    private final OrderService orderService;
 
     public ServiceManager() {
         this.membershipManager = new MembershipManager();
@@ -38,11 +38,11 @@ public class ServiceManager {
         this.paymentFactory = new PaymentFactory();
         this.purchaseSummaryFactory = new PurchaseSummaryFactory();
         this.purchaseService = new PurchaseService(membershipService, inventoryReadService, paymentFactory, purchaseSummaryFactory);
-        this.outputMessageManager = new OutputMessageManager(purchaseService, inventoryReadService);
-        this.promptInputMessageManager = new PromptInputMessageManager(outputMessageManager);
+        this.promptMessageManager = new PromptMessageManager(inventoryReadService);
         this.inputToOrderConverter = new InputToOrderConverter(productService);
         this.inventoryWriteService = new InventoryWriteService();
         this.inventoryUpdateManager = new InventoryUpdateManager(inventoryWriteService);
+        this.orderService = new OrderService(inventoryReadService, inputToOrderConverter);
     }
 
     public MembershipManager getMembershipManager() {
@@ -77,12 +77,8 @@ public class ServiceManager {
         return purchaseService;
     }
 
-    public OutputMessageManager getOutputMessageManager() {
-        return outputMessageManager;
-    }
-
-    public PromptInputMessageManager getPromptInputMessageManager() {
-        return promptInputMessageManager;
+    public PromptMessageManager getPromptInputMessageManager() {
+        return promptMessageManager;
     }
 
     public InputToOrderConverter getInputToOrderConverter() {
@@ -95,5 +91,13 @@ public class ServiceManager {
 
     public InventoryUpdateManager getInventoryUpdateManager() {
         return inventoryUpdateManager;
+    }
+
+    public PromptMessageManager getPromptMessageManager() {
+        return promptMessageManager;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
     }
 }

@@ -1,18 +1,23 @@
-package store.input;
+package store.io;
 
 import camp.nextstep.edu.missionutils.Console;
+import store.product.InventoryItem;
+import store.product.InventoryReadService;
+import store.purchase.Receipt;
 
-public class PromptInputMessageManager {
-    private final OutputMessageManager outputMessageManager;
+import java.util.List;
 
-    public PromptInputMessageManager(OutputMessageManager outputMessageManager) {
-        this.outputMessageManager = outputMessageManager;
+public class PromptMessageManager {
+    private final InventoryReadService inventoryReadService;
+
+    public PromptMessageManager(InventoryReadService inventoryReadService) {
+        this.inventoryReadService = inventoryReadService;
     }
 
     public String getUserResponseOrder() {
         String input;
         while (true) {
-            outputMessageManager.printIntro();
+            printIntro();
             input = Console.readLine().trim().toUpperCase();
             if (InputValidator.isValidFormat(input)) {
                 return input;
@@ -51,6 +56,22 @@ public class PromptInputMessageManager {
     public static String promptForAdditionalPurchase() {
         String message = "감사합니다. 구매하고 싶은 다른 상품이 있나요?";
         return getUserResponseYN(message);
+    }
+
+    public void printIntro() {
+        System.out.println("안녕하세요. W편의점입니다.\n" + "현재 보유하고 있는 상품입니다.\n");
+        printAllInventoryStocks();
+        System.out.println("\n구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
+    }
+
+    public void printAllInventoryStocks() {
+        List<InventoryItem> allItems = inventoryReadService.getAllInventoryItems();
+
+        allItems.forEach(System.out::println);
+    }
+
+    public void printReceipt(Receipt receipt) {
+        System.out.println(receipt);
     }
 
 }

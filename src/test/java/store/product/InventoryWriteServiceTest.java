@@ -34,20 +34,14 @@ class InventoryWriteServiceTest {
     @DisplayName("재고를 업데이트한다.")
     @Test
     void updateInventoryItemQuantity() {
-//        inventoryWriteService.updateInventoryItemQuantity(inventoryItems, updatedItem);
-//
-//        InventoryItem checkItem = inventoryItems.stream()
-//                .filter(item -> item.getProduct().equals(updatedItem.getProduct())
-//                        && item.getPromotion().equals(updatedItem.getPromotion()))
-//                .findFirst().orElse(null);
-//
-//        assertEquals(1, checkItem.getQuantity());
+        inventoryWriteService.updateInventoryItemQuantityWithoutPromotion(inventoryItems, updatedItem);
+
+        InventoryItem checkItem = inventoryItems.stream()
+                .filter(item -> item.getProduct().equals(updatedItem.getProduct())
+                        && item.getPromotion().equals(updatedItem.getPromotion()))
+                .findFirst().orElse(null);
+
+        assertEquals(1, checkItem.getQuantity());
     }
 
-    @DisplayName("재고를 파일에 작성한다.")
-    @Test
-    void saveInventoryItems() {
-//        inventoryWriteService.updateInventoryItemQuantity(inventoryItems, updatedItem);
-//        inventoryWriteService.saveInventoryItems(inventoryItems);
-    }
 }

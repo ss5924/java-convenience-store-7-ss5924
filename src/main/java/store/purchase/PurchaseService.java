@@ -21,15 +21,15 @@ public class PurchaseService {
         this.purchaseSummaryFactory = purchaseSummaryFactory;
     }
 
-    public Receipt createReceipt(List<PurchaseSummary> purchaseSummaries, boolean isMembershipDiscount) {
-        Purchase purchase = createPurchase(purchaseSummaries, isMembershipDiscount);
+    public Receipt createReceipt(List<PurchaseSummary> purchaseSummaries, String userId, boolean isMembershipDiscount) {
+        Purchase purchase = createPurchase(purchaseSummaries, userId, isMembershipDiscount);
         return new Receipt(purchase);
     }
 
-    public Purchase createPurchase(List<PurchaseSummary> purchaseSummaries, boolean isMembershipDiscount) {
+    public Purchase createPurchase(List<PurchaseSummary> purchaseSummaries, String userId, boolean isMembershipDiscount) {
         List<Item> purchaseItems = getPurchaseItem(purchaseSummaries);
         List<Item> giftItems = getGiftItems(purchaseSummaries);
-        Payment payment = createPayment(purchaseItems, giftItems, isMembershipDiscount);
+        Payment payment = createPayment(purchaseItems, giftItems, userId, isMembershipDiscount);
 
         return new Purchase(purchaseItems, giftItems, payment);
     }
@@ -53,8 +53,8 @@ public class PurchaseService {
         return giftItems;
     }
 
-    private Payment createPayment(List<Item> purchaseItems, List<Item> giftItems, boolean isMembershipDiscount) {
-        return paymentFactory.create(purchaseItems, giftItems, membershipService, "user_id1", isMembershipDiscount);
+    private Payment createPayment(List<Item> purchaseItems, List<Item> giftItems, String userId, boolean isMembershipDiscount) {
+        return paymentFactory.create(purchaseItems, giftItems, membershipService, userId, isMembershipDiscount);
     }
 
     public List<PurchaseSummary> createPurchaseSummaries(Order order, LocalDateTime now) {
