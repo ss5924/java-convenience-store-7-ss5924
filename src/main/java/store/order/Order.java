@@ -5,9 +5,15 @@ import java.util.List;
 
 public class Order {
     private List<OrderItem> orderItems;
+    private boolean isMembershipDiscount;
 
     public Order() {
         this.orderItems = new ArrayList<>();
+        this.isMembershipDiscount = false;
+    }
+
+    public void setMembershipDiscount(boolean membershipDiscount) {
+        isMembershipDiscount = membershipDiscount;
     }
 
     public void addOrderItems(OrderItem orderItem) {
@@ -25,4 +31,7 @@ public class Order {
         return orderItems;
     }
 
+    public boolean isMembershipDiscount() {
+        return isMembershipDiscount;
+    }
 }

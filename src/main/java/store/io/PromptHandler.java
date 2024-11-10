@@ -19,15 +19,24 @@ public class PromptHandler {
         this.orderService = orderService;
     }
 
-    public Order promptOrderUntilValidStock(LocalDateTime now) {
+    public Order promptOrderUntilValidInputForm(LocalDateTime now) {
         while (true) {
             try {
                 String input = getUserResponseInputString();
-                return orderService.createOrder(input, now);
+
+                Order order = orderService.createOrder(input, now);
+                boolean isMembershipDiscount = isMembershipDiscount();
+                order.setMembershipDiscount(isMembershipDiscount);
+                return order;
+
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    private boolean isMembershipDiscount() {
+        return promptMembershipDiscount().equals("Y");
     }
 
     private String getUserResponseInputString() {

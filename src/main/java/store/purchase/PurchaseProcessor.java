@@ -9,7 +9,7 @@ public class PurchaseProcessor {
         this.purchaseService = purchaseService;
     }
 
-    public Receipt purchase(List<PurchaseSummary> summaries, String userId, boolean isMembershipDiscount) {
+    public Receipt processPurchase(List<PurchaseSummary> summaries, String userId, boolean isMembershipDiscount) {
         return purchaseService.createReceipt(summaries, userId, isMembershipDiscount);
     }
 }

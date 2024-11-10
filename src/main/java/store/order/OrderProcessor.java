@@ -11,7 +11,7 @@ public class OrderProcessor {
         this.promptHandler = promptHandler;
     }
 
-    public Order promptOrderUntilValidStock(LocalDateTime now) {
-        return promptHandler.promptOrderUntilValidStock(now);
+    public Order promptOrderUntilValidInputForm(LocalDateTime now) {
+        return promptHandler.promptOrderUntilValidInputForm(now);
     }
 }

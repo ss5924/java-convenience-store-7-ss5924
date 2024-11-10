@@ -34,14 +34,13 @@ public class Application {
 
         boolean continueShopping = true;
         while (continueShopping) {
-            Order order = orderProcessor.promptOrderUntilValidStock(DateTimes.now());
-            boolean isMembershipDiscount = PromptHandler.promptMembershipDiscount().equals("Y");  // todo
+            Order order = orderProcessor.promptOrderUntilValidInputForm(DateTimes.now());
 
             List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
 
             optionalOrderingProcessor.updateSummariesWithOptionalOrdering(summaries);
             inventoryProcessor.updateInventory(summaries);
-            Receipt receipt = purchaseProcessor.purchase(summaries, USER_ID, isMembershipDiscount);
+            Receipt receipt = purchaseProcessor.processPurchase(summaries, USER_ID, order.isMembershipDiscount());
 
             promptHandler.printReceipt(receipt);
 
