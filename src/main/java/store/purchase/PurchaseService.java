@@ -2,7 +2,11 @@ package store.purchase;
 
 import store.membership.MembershipService;
 import store.order.Order;
-import store.product.InventoryReadService;
+import store.inventory.InventoryReadService;
+import store.payment.Payment;
+import store.payment.PaymentFactory;
+import store.purchasesummary.PurchaseSummary;
+import store.purchasesummary.PurchaseSummaryFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ public class PurchaseService {
         List<Item> giftItems = new ArrayList<>();
         for (PurchaseSummary summary : purchaseSummaries) {
             if (summary.getPotentialGiftItems() == 0) {
-                break;
+                continue;
             }
             giftItems.add(summary.toGiftItem());
         }
