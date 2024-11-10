@@ -50,7 +50,7 @@ class PurchaseServiceTest {
     @Test
     void createReceipt() {
         List<PurchaseSummary> purchaseSummaries = new ArrayList<>();
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 2, 10, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 2, 10, 10, now);
         purchaseSummaries.add(purchaseSummary);
 
         order.addOrderItems(new OrderItem(new Product("콜라", 1000), 2));
@@ -65,7 +65,7 @@ class PurchaseServiceTest {
     @Test
     void createReceipt2() {
         List<PurchaseSummary> purchaseSummaries = new ArrayList<>();
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 10, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 10, 10, now);
         purchaseSummaries.add(purchaseSummary);
 
         order.addOrderItems(new OrderItem(new Product("콜라", 1000), 3));

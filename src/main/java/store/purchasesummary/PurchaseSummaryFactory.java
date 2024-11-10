@@ -1,10 +1,9 @@
 package store.purchasesummary;
 
-import camp.nextstep.edu.missionutils.DateTimes;
-import store.order.Order;
-import store.order.OrderItem;
 import store.inventory.InventoryItem;
 import store.inventory.InventoryReadService;
+import store.order.Order;
+import store.order.OrderItem;
 import store.product.Product;
 import store.promotion.Promotion;
 
@@ -19,17 +18,17 @@ public class PurchaseSummaryFactory {
         List<PurchaseSummary> purchaseSummaries = new ArrayList<>();
 
         order.getOrderItems().forEach(orderItem -> {
-            PurchaseSummary purchaseSummary = createPurchaseSummary(orderItem, inventoryReadService);
+            PurchaseSummary purchaseSummary = createPurchaseSummary(orderItem, inventoryReadService, order.getRegisteredDate());
             purchaseSummaries.add(purchaseSummary);
         });
 
         return purchaseSummaries;
     }
 
-    private PurchaseSummary createPurchaseSummary(OrderItem orderItem, InventoryReadService inventoryReadService) {
+    private PurchaseSummary createPurchaseSummary(OrderItem orderItem, InventoryReadService inventoryReadService, LocalDateTime now) {
         Product product = orderItem.getProduct();
-        LocalDateTime now = DateTimes.now();
-        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product, now);
+
+        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product);
 
         Optional<Promotion> promotion = inventoryItems.stream()
                 .map(InventoryItem::getPromotion)
@@ -45,7 +44,7 @@ public class PurchaseSummaryFactory {
                 .mapToInt(InventoryItem::getQuantity)
                 .sum();
 
-        return new PurchaseSummary(product, promotion.orElse(null), orderedQuantity, promotionStock, noPromotionStock);
+        return new PurchaseSummary(product, promotion.orElse(null), orderedQuantity, promotionStock, noPromotionStock, now);
     }
 
 }

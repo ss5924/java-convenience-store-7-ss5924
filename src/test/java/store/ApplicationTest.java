@@ -48,7 +48,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 기간에_해당하지_않는_프로모션_적용() {
         assertNowTest(() -> {
-            run("[감자칩-2]", "N", "N");
+            run("[감자칩-2]", "N", "Y", "N");
             assertThat(output().replaceAll("\\s", "")).contains("3,000");
         }, LocalDate.of(2024, 2, 1).atStartOfDay());
     }

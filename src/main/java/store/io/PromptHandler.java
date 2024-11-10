@@ -1,13 +1,12 @@
 package store.io;
 
 import camp.nextstep.edu.missionutils.Console;
-import store.order.Order;
-import store.order.OrderService;
 import store.inventory.InventoryItem;
 import store.inventory.InventoryReadService;
+import store.order.Order;
+import store.order.OrderService;
 import store.purchase.Receipt;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PromptHandler {
@@ -19,12 +18,12 @@ public class PromptHandler {
         this.orderService = orderService;
     }
 
-    public Order promptOrderUntilValidInputForm(LocalDateTime now) {
+    public Order promptOrderUntilValidInputForm() {
         while (true) {
             try {
                 String input = getUserResponseInputString();
 
-                Order order = orderService.createOrder(input, now);
+                Order order = orderService.createOrder(input);
                 boolean isMembershipDiscount = isMembershipDiscount();
                 order.setMembershipDiscount(isMembershipDiscount);
                 return order;

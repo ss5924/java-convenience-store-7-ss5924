@@ -2,8 +2,6 @@ package store.order;
 
 import store.io.PromptHandler;
 
-import java.time.LocalDateTime;
-
 public class OrderProcessor {
     private final PromptHandler promptHandler;
 
@@ -11,7 +9,7 @@ public class OrderProcessor {
         this.promptHandler = promptHandler;
     }
 
-    public Order promptOrderUntilValidInputForm(LocalDateTime now) {
-        return promptHandler.promptOrderUntilValidInputForm(now);
+    public Order promptOrderUntilValidInputForm() {
+        return promptHandler.promptOrderUntilValidInputForm();
     }
 }

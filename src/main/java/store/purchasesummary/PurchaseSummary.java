@@ -6,6 +6,8 @@ import store.purchase.GiftItem;
 import store.purchase.Item;
 import store.purchase.PurchaseItem;
 
+import java.time.LocalDateTime;
+
 public class PurchaseSummary {
     private final Product product;
     private final Promotion promotion;
@@ -16,17 +18,24 @@ public class PurchaseSummary {
     private int eligibleFreeItems; // 현재 주문한 수량에서 프로모션 혜택을 계산했을 때 추가 주문을 통해 받을 수 있는 무료 증정 수량
     private int nonDiscountedQuantity; // 프로모션 재고 부족으로 할인이 적용되지 않는 수량
 
-    public PurchaseSummary(Product product, Promotion promotion, int orderedQuantity, int promotionStock, int noPromotionStock) {
+    public PurchaseSummary(Product product, Promotion promotion, int orderedQuantity, int promotionStock, int noPromotionStock, LocalDateTime now) {
         this.product = product;
-        this.promotion = promotion;
+        this.promotion = isPromotionValid(promotion, now) ? promotion : null;
 
         validate(orderedQuantity, promotionStock, noPromotionStock);
 
         calculateSummary(orderedQuantity, promotionStock, noPromotionStock);
     }
 
+    private boolean isPromotionValid(Promotion promotion, LocalDateTime now) {
+        if (promotion == null) {
+            return false;
+        }
+        return promotion.isValidPeriod(now);
+    }
+
     private void validate(int orderedQuantity, int promotionStock, int noPromotionStock) {
-        if(orderedQuantity > promotionStock + noPromotionStock) {
+        if (orderedQuantity > promotionStock + noPromotionStock) {
             throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다.");
         }
     }

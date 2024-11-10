@@ -26,7 +26,7 @@ class PurchaseSummaryTest {
     @DisplayName("프로모션 혜택을 통해 반환되는 값을 계산한다. - 혜택에 맞춰 수량을 주문함")
     @Test
     void calculatePurchaseAndGiftQuantities() {
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 10, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 10, 10, now);
 
         assertEquals(1, purchaseSummary.getPotentialGiftItems());
         assertEquals(2, purchaseSummary.getActualPurchaseQuantity());
@@ -39,7 +39,7 @@ class PurchaseSummaryTest {
     @DisplayName("프로모션 혜택을 통해 반환되는 값을 계산한다. - 조건에 맞는 수량만 가져오고 증정 수량을 가져오지 않음")
     @Test
     void calculatePurchaseAndGiftQuantities3() {
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 2, 10, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 2, 10, 10, now);
 
         assertEquals(0, purchaseSummary.getPotentialGiftItems());
         assertEquals(2, purchaseSummary.getActualPurchaseQuantity());
@@ -52,7 +52,7 @@ class PurchaseSummaryTest {
     @DisplayName("프로모션 혜택을 통해 반환되는 값을 계산한다. - 프로모션 재고의 최대치까지 가져옴")
     @Test
     void calculatePurchaseAndGiftQuantities2() {
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 8, 8, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 8, 8, 10, now);
 
         assertEquals(2, purchaseSummary.getPotentialGiftItems());
         assertEquals(6, purchaseSummary.getActualPurchaseQuantity());
@@ -65,7 +65,7 @@ class PurchaseSummaryTest {
     @DisplayName("프로모션 혜택을 통해 반환되는 값을 계산한다. - 전체 재고의 최대치를 초과하여 가져옴")
     @Test
     void calculatePurchaseAndGiftQuantities4() {
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 18, 8, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 18, 8, 10, now);
 
         assertEquals(2, purchaseSummary.getPotentialGiftItems());
         assertEquals(16, purchaseSummary.getActualPurchaseQuantity());
@@ -78,7 +78,7 @@ class PurchaseSummaryTest {
     @DisplayName("프로모션 혜택을 통해 반환되는 값을 계산한다. - 프로모션 재고가 없음")
     @Test
     void calculatePurchaseAndGiftQuantities5() {
-        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 0, 10);
+        PurchaseSummary purchaseSummary = new PurchaseSummary(product, promotion, 3, 0, 10, now);
 
         assertEquals(0, purchaseSummary.getPotentialGiftItems());
         assertEquals(3, purchaseSummary.getActualPurchaseQuantity());

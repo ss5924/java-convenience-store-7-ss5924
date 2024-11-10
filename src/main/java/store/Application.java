@@ -1,6 +1,5 @@
 package store;
 
-import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.ProcessManager;
 import store.common.ServiceManager;
 import store.io.PromptHandler;
@@ -32,7 +31,7 @@ public class Application {
     }
 
     private boolean processOrderCycle(ServiceManager serviceManager, ProcessManager processManager) {
-        Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm(DateTimes.now());
+        Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm();
 
         List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
 
