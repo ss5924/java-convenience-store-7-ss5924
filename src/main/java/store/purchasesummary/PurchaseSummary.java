@@ -34,6 +34,10 @@ public class PurchaseSummary {
         return promotion.isValidPeriod(now);
     }
 
+    public boolean isPromotionValid(LocalDateTime now) {
+        return isPromotionValid(promotion, now);
+    }
+
     private void validate(int orderedQuantity, int promotionStock, int noPromotionStock) {
         if (orderedQuantity > promotionStock + noPromotionStock) {
             throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다.");

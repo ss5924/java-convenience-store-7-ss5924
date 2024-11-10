@@ -1,5 +1,6 @@
 package store.order;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.io.PromptHandler;
 import store.product.Product;
 import store.purchasesummary.PurchaseSummary;
@@ -29,7 +30,7 @@ public class OptionalOrderingProcessor {
 
     private void setNonDiscountedProductsOption(List<PurchaseSummary> summaries) {
         summaries.stream()
-                .filter(summary -> summary.getRemainingPromotionStock() > 0)
+                .filter(summary -> summary.getRemainingPromotionStock() > 0 && summary.isPromotionValid(DateTimes.now()))
                 .forEach(summary -> {
                     int nonDiscountedQuantity = summary.getNonDiscountedQuantity();
                     Product product = summary.getProduct();
