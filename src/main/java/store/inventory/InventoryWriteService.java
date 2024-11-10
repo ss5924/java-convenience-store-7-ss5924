@@ -1,4 +1,4 @@
-package store.product;
+package store.inventory;
 
 import store.common.AbstractFileWriteService;
 

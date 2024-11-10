@@ -8,11 +8,14 @@ import store.membership.MembershipManager;
 import store.membership.MembershipService;
 import store.order.Order;
 import store.order.OrderItem;
-import store.product.InventoryReadService;
+import store.inventory.InventoryReadService;
+import store.payment.PaymentFactory;
 import store.product.Product;
 import store.product.ProductService;
 import store.promotion.Promotion;
 import store.promotion.PromotionService;
+import store.purchasesummary.PurchaseSummary;
+import store.purchasesummary.PurchaseSummaryFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

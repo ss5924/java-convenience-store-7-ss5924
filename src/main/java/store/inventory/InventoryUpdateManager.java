@@ -1,6 +1,7 @@
-package store.product;
+package store.inventory;
 
-import store.purchase.PurchaseSummary;
+import store.product.Product;
+import store.purchasesummary.PurchaseSummary;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import store.product.Product;
 import store.purchase.GiftItem;
 import store.purchase.Item;
-import store.purchase.Payment;
+import store.payment.Payment;
 import store.purchase.PurchaseItem;
 
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
-package store.purchase;
+package store.payment;
 
 import store.membership.MembershipService;
+import store.purchase.Item;
 
 import java.util.List;
 

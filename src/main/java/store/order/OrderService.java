@@ -1,7 +1,7 @@
 package store.order;
 
 import store.io.InputToOrderConverter;
-import store.product.InventoryReadService;
+import store.inventory.InventoryReadService;
 
 import java.time.LocalDateTime;
 

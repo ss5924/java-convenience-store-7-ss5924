@@ -6,9 +6,9 @@ import store.io.PromptHandler;
 import store.order.OptionalOrderingProcessor;
 import store.order.Order;
 import store.order.OrderProcessor;
-import store.product.InventoryProcessor;
+import store.inventory.InventoryProcessor;
 import store.purchase.PurchaseProcessor;
-import store.purchase.PurchaseSummary;
+import store.purchasesummary.PurchaseSummary;
 import store.purchase.Receipt;
 
 import java.util.List;

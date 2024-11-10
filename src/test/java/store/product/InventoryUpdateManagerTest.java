@@ -4,9 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.common.ServiceManager;
+import store.inventory.InventoryItem;
 import store.order.Order;
 import store.order.OrderItem;
-import store.purchase.PurchaseSummary;
+import store.purchasesummary.PurchaseSummary;
 
 import java.util.List;
 

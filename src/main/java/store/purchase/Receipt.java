@@ -1,5 +1,7 @@
 package store.purchase;
 
+import store.payment.Payment;
+
 import java.text.NumberFormat;
 
 public class Receipt {

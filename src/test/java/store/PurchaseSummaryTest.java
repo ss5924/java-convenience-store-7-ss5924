@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.product.Product;
 import store.promotion.Promotion;
-import store.purchase.PurchaseSummary;
+import store.purchasesummary.PurchaseSummary;
 
 import java.time.LocalDateTime;
 

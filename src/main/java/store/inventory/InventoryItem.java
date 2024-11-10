@@ -1,5 +1,6 @@
-package store.product;
+package store.inventory;
 
+import store.product.Product;
 import store.promotion.Promotion;
 
 import java.text.NumberFormat;

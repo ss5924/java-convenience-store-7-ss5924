@@ -1,6 +1,8 @@
-package store.product;
+package store.inventory;
 
 import store.common.AbstractFileReadService;
+import store.product.Product;
+import store.product.ProductService;
 import store.promotion.Promotion;
 import store.promotion.PromotionService;
 

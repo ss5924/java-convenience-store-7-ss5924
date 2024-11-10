@@ -1,5 +1,7 @@
 package store.purchase;
 
+import store.purchasesummary.PurchaseSummary;
+
 import java.util.List;
 
 public class PurchaseProcessor {

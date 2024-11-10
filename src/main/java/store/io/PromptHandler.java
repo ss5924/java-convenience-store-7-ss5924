@@ -3,8 +3,8 @@ package store.io;
 import camp.nextstep.edu.missionutils.Console;
 import store.order.Order;
 import store.order.OrderService;
-import store.product.InventoryItem;
-import store.product.InventoryReadService;
+import store.inventory.InventoryItem;
+import store.inventory.InventoryReadService;
 import store.purchase.Receipt;
 
 import java.time.LocalDateTime;

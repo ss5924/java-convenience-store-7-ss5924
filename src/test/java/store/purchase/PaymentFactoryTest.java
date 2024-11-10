@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.membership.MembershipManager;
 import store.membership.MembershipService;
+import store.payment.Payment;
+import store.payment.PaymentFactory;
 import store.product.Product;
 
 import java.util.ArrayList;

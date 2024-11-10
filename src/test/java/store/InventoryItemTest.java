@@ -3,7 +3,7 @@ package store;
 import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import store.product.InventoryItem;
+import store.inventory.InventoryItem;
 import store.product.Product;
 import store.promotion.Promotion;
 

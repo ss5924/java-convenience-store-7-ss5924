@@ -1,7 +1,10 @@
-package store.purchase;
+package store.purchasesummary;
 
 import store.product.Product;
 import store.promotion.Promotion;
+import store.purchase.GiftItem;
+import store.purchase.Item;
+import store.purchase.PurchaseItem;
 
 public class PurchaseSummary {
     private final Product product;

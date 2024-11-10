@@ -4,6 +4,8 @@ import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.inventory.InventoryItem;
+import store.inventory.InventoryWriteService;
 import store.promotion.Promotion;
 
 import java.util.ArrayList;

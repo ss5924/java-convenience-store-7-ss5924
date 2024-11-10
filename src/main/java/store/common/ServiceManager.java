@@ -5,14 +5,14 @@ import store.io.PromptHandler;
 import store.membership.MembershipManager;
 import store.membership.MembershipService;
 import store.order.OrderService;
-import store.product.InventoryReadService;
-import store.product.InventoryUpdateManager;
-import store.product.InventoryWriteService;
+import store.inventory.InventoryReadService;
+import store.inventory.InventoryUpdateManager;
+import store.inventory.InventoryWriteService;
 import store.product.ProductService;
 import store.promotion.PromotionService;
-import store.purchase.PaymentFactory;
+import store.payment.PaymentFactory;
 import store.purchase.PurchaseService;
-import store.purchase.PurchaseSummaryFactory;
+import store.purchasesummary.PurchaseSummaryFactory;
 
 public class ServiceManager {
     private final MembershipManager membershipManager;

@@ -1,10 +1,10 @@
-package store.purchase;
+package store.purchasesummary;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import store.order.Order;
 import store.order.OrderItem;
-import store.product.InventoryItem;
-import store.product.InventoryReadService;
+import store.inventory.InventoryItem;
+import store.inventory.InventoryReadService;
 import store.product.Product;
 import store.promotion.Promotion;
 

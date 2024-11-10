@@ -2,7 +2,7 @@ package store.order;
 
 import store.io.PromptHandler;
 import store.product.Product;
-import store.purchase.PurchaseSummary;
+import store.purchasesummary.PurchaseSummary;
 
 import java.util.List;
 import java.util.Map;
