@@ -6,7 +6,7 @@ import store.order.Order;
 import store.order.OrderProcessor;
 import store.product.InventoryProcessor;
 import store.purchase.PurchaseSummary;
-import store.purchase.PurchaseSummaryProcessor;
+import store.order.OptionalOrderingPurchaseSummaryProcessor;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ public class Application {
 
         PromptHandler promptHandler = serviceManager.getPromptHandler();
         OrderProcessor orderProcessor = new OrderProcessor(serviceManager.getOrderService(), promptHandler);
-        PurchaseSummaryProcessor purchaseSummaryProcessor = new PurchaseSummaryProcessor(promptHandler);
+        OptionalOrderingPurchaseSummaryProcessor optionalOrderingPurchaseSummaryProcessor
+                = new OptionalOrderingPurchaseSummaryProcessor();
         InventoryProcessor inventoryProcessor = new InventoryProcessor(
                 serviceManager.getInventoryReadService(),
                 serviceManager.getInventoryUpdateManager(),
@@ -31,14 +32,13 @@ public class Application {
         );
 
         boolean continueShopping = true;
+        promptHandler.printIntro();
         while (continueShopping) {
-            promptHandler.printIntro();
-
             Order order = orderProcessor.promptOrderUntilValidStock();
             List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
 
-            purchaseSummaryProcessor.updateSummariesWithAdditionalOptions(summaries);
-            inventoryProcessor.updateInventoryAndPrintReceipt(summaries, USER_ID, isMembershipDiscount(promptHandler));
+            optionalOrderingPurchaseSummaryProcessor.updateSummariesWithAdditionalOptions(summaries);
+            inventoryProcessor.updateInventoryAndPrintReceipt(summaries, USER_ID, isMembershipDiscount());
 
             continueShopping = PromptHandler.promptForAdditionalPurchase().equals("Y");
         }
@@ -46,7 +46,7 @@ public class Application {
         System.out.println("감사합니다! W편의점을 이용해 주셔서 감사합니다.");
     }
 
-    private boolean isMembershipDiscount(PromptHandler promptHandler) {
+    private boolean isMembershipDiscount() {
         return PromptHandler.promptMembershipDiscount().equals("Y");
     }
 }

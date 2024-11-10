@@ -33,7 +33,7 @@ class InventoryReadServiceTest {
     @Test
     void getInventoryItem() {
         Product product = new Product("콜라", 1000);
-        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product, now);
+        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product);
 
         assertEquals(2, inventoryItems.size());
         assertEquals("콜라", inventoryItems.getFirst().getProduct().getName());
@@ -74,7 +74,7 @@ class InventoryReadServiceTest {
     @DisplayName("상품의 전체 갯수를 확인한다.")
     @Test
     void getCanApplyTotalQuantity() {
-        int quantity = inventoryReadService.getInventoryItemsByProduct(cola, now).stream().mapToInt(InventoryItem::getQuantity).sum();
+        int quantity = inventoryReadService.getInventoryItemsByProduct(cola).stream().mapToInt(InventoryItem::getQuantity).sum();
 
         assertEquals(20, quantity);
     }

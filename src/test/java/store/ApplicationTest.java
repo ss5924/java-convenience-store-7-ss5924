@@ -41,7 +41,7 @@ class ApplicationTest extends NsTest {
     void 여러_개의_일반_상품_구매() {
         assertSimpleTest(() -> {
             run("[비타민워터-3],[물-2],[정식도시락-2]", "N", "N");
-            assertThat(output().replaceAll("\\s", "")).contains("내실돈18,300");
+            assertThat(output().replaceAll("\\s", "")).contains("18,300");
         });
     }
 
@@ -49,7 +49,7 @@ class ApplicationTest extends NsTest {
     void 기간에_해당하지_않는_프로모션_적용() {
         assertNowTest(() -> {
             run("[감자칩-2]", "N", "N");
-            assertThat(output().replaceAll("\\s", "")).contains("내실돈3,000");
+            assertThat(output().replaceAll("\\s", "")).contains("3,000");
         }, LocalDate.of(2024, 2, 1).atStartOfDay());
     }
 

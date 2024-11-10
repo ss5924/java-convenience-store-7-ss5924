@@ -1,18 +1,14 @@
-package store.purchase;
+package store.order;
 
 import store.io.PromptHandler;
 import store.product.Product;
+import store.purchase.PurchaseSummary;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PurchaseSummaryProcessor {
-    private final PromptHandler promptHandler;
-
-    public PurchaseSummaryProcessor(PromptHandler promptHandler) {
-        this.promptHandler = promptHandler;
-    }
+public class OptionalOrderingPurchaseSummaryProcessor {
 
     public void updateSummariesWithAdditionalOptions(List<PurchaseSummary> summaries) {
         setEligibleFreeItemsOption(summaries);
@@ -29,7 +25,7 @@ public class PurchaseSummaryProcessor {
 
         eligibleFreeItems.forEach((product, quantity) -> {
             if (quantity > 0) {
-                String response = promptHandler.promptFreeItemOffer(product.getName());
+                String response = PromptHandler.promptFreeItemOffer(product.getName());
                 summaries.stream()
                         .filter(summary -> summary.getProduct().equals(product))
                         .findFirst()
@@ -39,6 +35,12 @@ public class PurchaseSummaryProcessor {
     }
 
     private void setNonDiscountedProductsOption(List<PurchaseSummary> summaries) {
+        boolean hasPromotionStock = summaries.stream()
+                .anyMatch(summary -> summary.getRemainingPromotionStock() > 0);
+        if (!hasPromotionStock) {
+            return;
+        }
+
         Map<Product, Integer> nonDiscountedProducts = summaries.stream()
                 .filter(summary -> summary.getNonDiscountedQuantity() > 0)
                 .collect(Collectors.toMap(
@@ -48,7 +50,7 @@ public class PurchaseSummaryProcessor {
 
         nonDiscountedProducts.forEach((product, quantity) -> {
             if (quantity > 0) {
-                String response = promptHandler.promptNonDiscountedPurchase(product.getName(), quantity);
+                String response = PromptHandler.promptNonDiscountedPurchase(product.getName(), quantity);
                 summaries.stream()
                         .filter(summary -> summary.getProduct().equals(product))
                         .findFirst()

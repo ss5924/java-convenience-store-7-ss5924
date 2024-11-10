@@ -1,5 +1,6 @@
 package store.product;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.AbstractFileReadService;
 import store.promotion.Promotion;
 import store.promotion.PromotionService;
@@ -65,7 +66,10 @@ public class InventoryReadService extends AbstractFileReadService<InventoryItem>
     }
 
     public List<InventoryItem> getAllInventoryItems() {
-        return getAllObjects(PRODUCT_FILE_PATH);
+        LocalDateTime now = DateTimes.now();
+        return getAllObjects(PRODUCT_FILE_PATH).stream()
+                .filter(item -> item.getPromotion() == null || item.getPromotion().isValidPeriod(now))
+                .toList();
     }
 
     @Override

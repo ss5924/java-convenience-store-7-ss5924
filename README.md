@@ -77,6 +77,8 @@
 10. Purchase
    - 구매 내역 정보
    - 구매 상품 내역(PurchaseItems), 증정 상품 내역(GiftItems), 금액 정보(Amount)
+11. PurchaseSummary
+   - 주문 내역에 대한 요약 정보, 프로모션 행사 제품 적용 후의 갯수 변화 계산
 
 #### b. 비즈니스 로직 구현
 
@@ -95,8 +97,8 @@
     - 프로모션 조건 확인 및 적용
 6. MembershipService
     - 멤버십 할인 및 한도 관리
-7. ReceiptService
-    - 영수증 관리
+7. ~~ReceiptService~~
+    - ~~영수증 관리~~
 8. AbstractFileReadService
     - 파일 출력 처리
 
@@ -116,6 +118,9 @@
 
 ## 다. 변경 사항
 
+#### v1.0-SNAPSHOT - 2023-11-09
+- `PurchaseSummary` 도메인 추가하여 주문에 대한 요약 계산 수행
+
 #### v1.0-SNAPSHOT - 2023-11-06
 - `AbstractFileReadService` 추가하여 file read에 대한 관심사 분리, 공통 로직에 대한 처리
 - `Purchase`:구매 내역 정보 담게 변경, `Receipt`:영수증 출력 담당 도메인
@@ -127,6 +132,13 @@
 
 ## 라. TODO LIST
 
+#### v1.0-SNAPSHOT - 2023-11-10
+- `Inventory` 조회 시 날짜 반영 부분 수정 필요
+- 추가적인 버그 수정
+- README 정리
+- 코드 패키지 정리
+- 코드 리팩토링
+
 #### v1.0-SNAPSHOT - 2023-11-07
-- 주문 이후 구매 프로세스 정의
-- file write 처리 구조 정의 (products.md 업데이트)
+- ~~주문 이후 구매 프로세스 정의~~
+- ~~file write 처리 구조 정의 (products.md 업데이트)~~
