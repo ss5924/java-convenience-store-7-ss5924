@@ -1,15 +1,12 @@
 package store;
 
 import camp.nextstep.edu.missionutils.DateTimes;
+import store.common.ProcessManager;
 import store.common.ServiceManager;
 import store.io.PromptHandler;
-import store.order.OptionalOrderingProcessor;
 import store.order.Order;
-import store.order.OrderProcessor;
-import store.inventory.InventoryProcessor;
-import store.purchase.PurchaseProcessor;
-import store.purchasesummary.PurchaseSummary;
 import store.purchase.Receipt;
+import store.purchasesummary.PurchaseSummary;
 
 import java.util.List;
 
@@ -22,32 +19,30 @@ public class Application {
 
     public void run() {
         ServiceManager serviceManager = new ServiceManager();
+        ProcessManager processManager = new ProcessManager(serviceManager);
 
-        PromptHandler promptHandler = serviceManager.getPromptHandler();
-        OrderProcessor orderProcessor = new OrderProcessor(promptHandler);
-        OptionalOrderingProcessor optionalOrderingProcessor = new OptionalOrderingProcessor();
-        InventoryProcessor inventoryProcessor = new InventoryProcessor(
-                serviceManager.getInventoryReadService(), serviceManager.getInventoryUpdateManager());
-        PurchaseProcessor purchaseProcessor = new PurchaseProcessor(serviceManager.getPurchaseService());
-
-        promptHandler.printIntro();
+        serviceManager.getPromptHandler().printIntro();
 
         boolean continueShopping = true;
         while (continueShopping) {
-            Order order = orderProcessor.promptOrderUntilValidInputForm(DateTimes.now());
-
-            List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
-
-            optionalOrderingProcessor.updateSummariesWithOptionalOrdering(summaries);
-            inventoryProcessor.updateInventory(summaries);
-            Receipt receipt = purchaseProcessor.processPurchase(summaries, USER_ID, order.isMembershipDiscount());
-
-            promptHandler.printReceipt(receipt);
-
-            continueShopping = PromptHandler.promptForAdditionalPurchase().equals("Y");
+            continueShopping = processOrderCycle(serviceManager, processManager);
         }
 
         System.out.println("감사합니다! W편의점을 이용해 주셔서 감사합니다.");
+    }
+
+    private boolean processOrderCycle(ServiceManager serviceManager, ProcessManager processManager) {
+        Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm(DateTimes.now());
+
+        List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
+
+        processManager.getOptionalOrderingProcessor().updateSummariesWithOptionalOrdering(summaries);
+        processManager.getInventoryProcessor().updateInventory(summaries);
+        Receipt receipt = processManager.getPurchaseProcessor().processPurchase(summaries, USER_ID, order.isMembershipDiscount());
+
+        serviceManager.getPromptHandler().printReceipt(receipt);
+
+        return PromptHandler.promptForAdditionalPurchase().equals("Y");
     }
 
 }
