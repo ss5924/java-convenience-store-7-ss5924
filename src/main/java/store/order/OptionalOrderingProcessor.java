@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OptionalOrderingPurchaseSummaryProcessor {
+public class OptionalOrderingProcessor {
 
-    public void updateSummariesWithAdditionalOptions(List<PurchaseSummary> summaries) {
+    public void updateSummariesWithOptionalOrdering(List<PurchaseSummary> summaries) {
         setEligibleFreeItemsOption(summaries);
         setNonDiscountedProductsOption(summaries);
     }

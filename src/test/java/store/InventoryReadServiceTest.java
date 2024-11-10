@@ -33,7 +33,7 @@ class InventoryReadServiceTest {
     @Test
     void getInventoryItem() {
         Product product = new Product("콜라", 1000);
-        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product);
+        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product, now);
 
         assertEquals(2, inventoryItems.size());
         assertEquals("콜라", inventoryItems.getFirst().getProduct().getName());
@@ -45,7 +45,7 @@ class InventoryReadServiceTest {
     @DisplayName("프로모션 기간이 유효한 재고 및 프로모션이 없는 재고를 가져온다.")
     @Test
     void getInventoryItemsWithinValidPeriod() {
-        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsWithinValidPeriod(now);
+        List<InventoryItem> inventoryItems = inventoryReadService.getAllInventoryItems();
 
         assertEquals(16, inventoryItems.size());
         assertEquals("컵라면", inventoryItems.getLast().getProduct().getName());
@@ -74,7 +74,8 @@ class InventoryReadServiceTest {
     @DisplayName("상품의 전체 갯수를 확인한다.")
     @Test
     void getCanApplyTotalQuantity() {
-        int quantity = inventoryReadService.getInventoryItemsByProduct(cola).stream().mapToInt(InventoryItem::getQuantity).sum();
+        int quantity = inventoryReadService.getInventoryItemsByProduct(cola, now)
+                .stream().mapToInt(InventoryItem::getQuantity).sum();
 
         assertEquals(20, quantity);
     }

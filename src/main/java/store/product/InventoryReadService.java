@@ -1,12 +1,10 @@
 package store.product;
 
-import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.AbstractFileReadService;
 import store.promotion.Promotion;
 import store.promotion.PromotionService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryReadService extends AbstractFileReadService<InventoryItem> {
@@ -19,20 +17,14 @@ public class InventoryReadService extends AbstractFileReadService<InventoryItem>
         this.promotionService = promotionService;
     }
 
-    public int getStockByProduct(Product product) {
-        return getInventoryItemsByProduct(product).stream().mapToInt(InventoryItem::getQuantity).sum();
+    public int getStockByProduct(Product product, LocalDateTime now) {
+        return getInventoryItemsByProduct(product, now)
+                .stream().mapToInt(InventoryItem::getQuantity).sum();
     }
 
-    public InventoryItem getInventoryItemsWithPromotionByProductAndPromotion(Product product, Promotion promotion, LocalDateTime now) {
-        InventoryItem itemWithPromotion = getInventoryItemWithPromotionByProduct(product, now);
-        if (!itemWithPromotion.getPromotion().equals(promotion)) {
-            throw new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다.");
-        }
-        return itemWithPromotion;
-    }
-
-    public List<InventoryItem> getInventoryItemsByProduct(Product product) {
-        return getAllInventoryItems().stream().filter(item -> item.getProduct().equals(product)).toList();
+    public List<InventoryItem> getInventoryItemsByProduct(Product product, LocalDateTime now) {
+        return getAllInventoryItemsWithValidPeriod(now)
+                .stream().filter(item -> item.getProduct().equals(product)).toList();
     }
 
     public InventoryItem getInventoryItemsWithoutPromotionByProduct(Product product) {
@@ -47,29 +39,24 @@ public class InventoryReadService extends AbstractFileReadService<InventoryItem>
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건에 맞는 재고가 없습니다."));
     }
 
-    public List<InventoryItem> getInventoryItemsWithinValidPeriod(LocalDateTime now) {
-        List<InventoryItem> result = new ArrayList<>();
-        result.addAll(getInventoryItemsWithPromotion(now));
-        result.addAll(getInventoryItemsWithoutPromotion());
-        return result;
-    }
-
     public List<InventoryItem> getInventoryItemsWithoutPromotion() {
         return getAllInventoryItems().stream()
                 .filter(inventoryItem -> inventoryItem.getPromotion() == null).toList();
     }
 
     public List<InventoryItem> getInventoryItemsWithPromotion(LocalDateTime now) {
+        return getAllInventoryItemsWithValidPeriod(now).stream()
+                .filter(inventoryItem -> inventoryItem.getPromotion() != null).toList();
+    }
+
+    public List<InventoryItem> getAllInventoryItemsWithValidPeriod(LocalDateTime now) {
         return getAllInventoryItems().stream()
-                .filter(inventoryItem -> inventoryItem.getPromotion() != null
-                        && inventoryItem.getPromotion().isValidPeriod(now)).toList();
+                .filter(item -> item.getPromotion() == null || item.getPromotion().isValidPeriod(now))
+                .toList();
     }
 
     public List<InventoryItem> getAllInventoryItems() {
-        LocalDateTime now = DateTimes.now();
-        return getAllObjects(PRODUCT_FILE_PATH).stream()
-                .filter(item -> item.getPromotion() == null || item.getPromotion().isValidPeriod(now))
-                .toList();
+        return getAllObjects(PRODUCT_FILE_PATH);
     }
 
     @Override

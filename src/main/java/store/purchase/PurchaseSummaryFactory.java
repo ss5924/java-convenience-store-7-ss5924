@@ -1,5 +1,6 @@
 package store.purchase;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.order.Order;
 import store.order.OrderItem;
 import store.product.InventoryItem;
@@ -7,6 +8,7 @@ import store.product.InventoryReadService;
 import store.product.Product;
 import store.promotion.Promotion;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +28,8 @@ public class PurchaseSummaryFactory {
 
     private PurchaseSummary createPurchaseSummary(OrderItem orderItem, InventoryReadService inventoryReadService) {
         Product product = orderItem.getProduct();
-        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product);
+        LocalDateTime now = DateTimes.now();
+        List<InventoryItem> inventoryItems = inventoryReadService.getInventoryItemsByProduct(product, now);
 
         Optional<Promotion> promotion = inventoryItems.stream()
                 .map(InventoryItem::getPromotion)

@@ -1,12 +1,15 @@
 package store;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.common.ServiceManager;
 import store.io.PromptHandler;
+import store.order.OptionalOrderingProcessor;
 import store.order.Order;
 import store.order.OrderProcessor;
 import store.product.InventoryProcessor;
+import store.purchase.PurchaseProcessor;
 import store.purchase.PurchaseSummary;
-import store.order.OptionalOrderingPurchaseSummaryProcessor;
+import store.purchase.Receipt;
 
 import java.util.List;
 
@@ -21,24 +24,26 @@ public class Application {
         ServiceManager serviceManager = new ServiceManager();
 
         PromptHandler promptHandler = serviceManager.getPromptHandler();
-        OrderProcessor orderProcessor = new OrderProcessor(serviceManager.getOrderService(), promptHandler);
-        OptionalOrderingPurchaseSummaryProcessor optionalOrderingPurchaseSummaryProcessor
-                = new OptionalOrderingPurchaseSummaryProcessor();
+        OrderProcessor orderProcessor = new OrderProcessor(promptHandler);
+        OptionalOrderingProcessor optionalOrderingProcessor = new OptionalOrderingProcessor();
         InventoryProcessor inventoryProcessor = new InventoryProcessor(
-                serviceManager.getInventoryReadService(),
-                serviceManager.getInventoryUpdateManager(),
-                serviceManager.getPurchaseService(),
-                promptHandler
-        );
+                serviceManager.getInventoryReadService(), serviceManager.getInventoryUpdateManager());
+        PurchaseProcessor purchaseProcessor = new PurchaseProcessor(serviceManager.getPurchaseService());
+
+        promptHandler.printIntro();
 
         boolean continueShopping = true;
-        promptHandler.printIntro();
         while (continueShopping) {
-            Order order = orderProcessor.promptOrderUntilValidStock();
+            Order order = orderProcessor.promptOrderUntilValidStock(DateTimes.now());
+            boolean isMembershipDiscount = PromptHandler.promptMembershipDiscount().equals("Y");  // todo
+
             List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
 
-            optionalOrderingPurchaseSummaryProcessor.updateSummariesWithAdditionalOptions(summaries);
-            inventoryProcessor.updateInventoryAndPrintReceipt(summaries, USER_ID, isMembershipDiscount());
+            optionalOrderingProcessor.updateSummariesWithOptionalOrdering(summaries);
+            inventoryProcessor.updateInventory(summaries);
+            Receipt receipt = purchaseProcessor.purchase(summaries, USER_ID, isMembershipDiscount);
+
+            promptHandler.printReceipt(receipt);
 
             continueShopping = PromptHandler.promptForAdditionalPurchase().equals("Y");
         }
@@ -46,7 +51,4 @@ public class Application {
         System.out.println("감사합니다! W편의점을 이용해 주셔서 감사합니다.");
     }
 
-    private boolean isMembershipDiscount() {
-        return PromptHandler.promptMembershipDiscount().equals("Y");
-    }
 }

@@ -1,20 +1,36 @@
 package store.io;
 
 import camp.nextstep.edu.missionutils.Console;
+import store.order.Order;
+import store.order.OrderService;
 import store.product.InventoryItem;
 import store.product.InventoryReadService;
 import store.purchase.Receipt;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PromptHandler {
     private final InventoryReadService inventoryReadService;
+    private final OrderService orderService;
 
-    public PromptHandler(InventoryReadService inventoryReadService) {
+    public PromptHandler(InventoryReadService inventoryReadService, OrderService orderService) {
         this.inventoryReadService = inventoryReadService;
+        this.orderService = orderService;
     }
 
-    public String getUserResponseOrder() {
+    public Order promptOrderUntilValidStock(LocalDateTime now) {
+        while (true) {
+            try {
+                String input = getUserResponseInputString();
+                return orderService.createOrder(input, now);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private String getUserResponseInputString() {
         String input;
         while (true) {
             printIntro();
@@ -26,7 +42,7 @@ public class PromptHandler {
         }
     }
 
-    public static String getUserResponseYN(String message) {
+    private static String getUserResponseYN(String message) {
         String input;
         while (true) {
             System.out.print(message + " (Y/N): ");
@@ -64,7 +80,7 @@ public class PromptHandler {
         System.out.println("\n구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
     }
 
-    public void printAllInventoryStocks() {
+    private void printAllInventoryStocks() {
         List<InventoryItem> allItems = inventoryReadService.getAllInventoryItems();
 
         allItems.forEach(System.out::println);
