@@ -1,27 +1,20 @@
 package store.purchase;
 
 import store.membership.MembershipService;
-import store.order.Order;
-import store.inventory.InventoryReadService;
 import store.payment.Payment;
 import store.payment.PaymentFactory;
 import store.purchasesummary.PurchaseSummary;
-import store.purchasesummary.PurchaseSummaryFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PurchaseService {
     private final MembershipService membershipService;
-    private final InventoryReadService inventoryReadService;
     private final PaymentFactory paymentFactory;
-    private final PurchaseSummaryFactory purchaseSummaryFactory;
 
-    public PurchaseService(MembershipService membershipService, InventoryReadService inventoryReadService, PaymentFactory paymentFactory, PurchaseSummaryFactory purchaseSummaryFactory) {
+    public PurchaseService(MembershipService membershipService, PaymentFactory paymentFactory) {
         this.membershipService = membershipService;
-        this.inventoryReadService = inventoryReadService;
         this.paymentFactory = paymentFactory;
-        this.purchaseSummaryFactory = purchaseSummaryFactory;
     }
 
     public Receipt createReceipt(List<PurchaseSummary> purchaseSummaries, String userId, boolean isMembershipDiscount) {
@@ -58,10 +51,6 @@ public class PurchaseService {
 
     private Payment createPayment(List<Item> purchaseItems, List<Item> giftItems, String userId, boolean isMembershipDiscount) {
         return paymentFactory.create(purchaseItems, giftItems, membershipService, userId, isMembershipDiscount);
-    }
-
-    public List<PurchaseSummary> createPurchaseSummaries(Order order) {
-        return purchaseSummaryFactory.createPurchaseSummaries(order, inventoryReadService);
     }
 
 }

@@ -39,7 +39,7 @@ class PurchaseServiceTest {
         paymentFactory = new PaymentFactory();
         inventoryReadService = new InventoryReadService(new ProductService(), new PromotionService());
         purchaseSummaryFactory = new PurchaseSummaryFactory();
-        purchaseService = new PurchaseService(membershipService, inventoryReadService, paymentFactory, purchaseSummaryFactory);
+        purchaseService = new PurchaseService(membershipService, paymentFactory);
         product = new Product("콜라", 1000);
         promotion = new Promotion("2+1", 2, 1, now, now.plusDays(1));
 

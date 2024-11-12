@@ -33,8 +33,7 @@ public class Application {
     private boolean processOrderCycle(ServiceManager serviceManager, ProcessManager processManager) {
         Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm();
 
-        List<PurchaseSummary> summaries = serviceManager.getPurchaseService().createPurchaseSummaries(order);
-
+        List<PurchaseSummary> summaries = processManager.getPurchaseSummaryProcessor().createPurchaseSummaries(order);
         processManager.getOptionalOrderingProcessor().updateSummariesWithOptionalOrdering(summaries);
         processManager.getInventoryProcessor().updateInventory(summaries);
         Receipt receipt = processManager.getPurchaseProcessor().processPurchase(summaries, USER_ID, order.isMembershipDiscount());

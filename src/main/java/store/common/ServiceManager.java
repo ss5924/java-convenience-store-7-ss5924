@@ -13,6 +13,7 @@ import store.promotion.PromotionService;
 import store.payment.PaymentFactory;
 import store.purchase.PurchaseService;
 import store.purchasesummary.PurchaseSummaryFactory;
+import store.purchasesummary.PurchaseSummaryService;
 
 public class ServiceManager {
     private final MembershipManager membershipManager;
@@ -25,6 +26,7 @@ public class ServiceManager {
     private final PromotionService promotionService;
     private final MembershipService membershipService;
     private final InventoryReadService inventoryReadService;
+    private final PurchaseSummaryService purchaseSummaryService;
     private final PurchaseService purchaseService;
     private final InventoryWriteService inventoryWriteService;
     private final PromptHandler promptHandler;
@@ -38,11 +40,12 @@ public class ServiceManager {
         this.inventoryWriteService = new InventoryWriteService();
         this.membershipService = new MembershipService(membershipManager);
         this.inventoryReadService = new InventoryReadService(productService, promotionService);
-        this.purchaseService = new PurchaseService(membershipService, inventoryReadService, paymentFactory, purchaseSummaryFactory);
+        this.purchaseService = new PurchaseService(membershipService, paymentFactory);
         this.inputToOrderConverter = new InputToOrderConverter(productService);
         this.orderService = new OrderService(inventoryReadService, inputToOrderConverter);
         this.inventoryUpdateManager = new InventoryUpdateManager(inventoryWriteService);
         this.promptHandler = new PromptHandler(inventoryReadService, orderService);
+        this.purchaseSummaryService = new PurchaseSummaryService(purchaseSummaryFactory, inventoryReadService);
     }
 
     public MembershipManager getMembershipManager() {
@@ -95,5 +98,9 @@ public class ServiceManager {
 
     public PromptHandler getPromptHandler() {
         return promptHandler;
+    }
+
+    public PurchaseSummaryService getPurchaseSummaryService() {
+        return purchaseSummaryService;
     }
 }
