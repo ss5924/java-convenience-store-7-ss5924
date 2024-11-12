@@ -9,7 +9,7 @@ public class Purchase {
     private List<Item> giftItems;
     private Payment payment;
 
-    public Purchase(List<Item> purchaseItems, List<Item> giftItems, Payment payment) {
+    Purchase(List<Item> purchaseItems, List<Item> giftItems, Payment payment) {
         this.purchaseItems = purchaseItems;
         this.giftItems = giftItems;
         this.payment = payment;

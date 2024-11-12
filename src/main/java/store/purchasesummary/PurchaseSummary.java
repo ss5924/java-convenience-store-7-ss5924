@@ -18,7 +18,7 @@ public class PurchaseSummary {
     private int eligibleFreeItems; // 현재 주문한 수량에서 프로모션 혜택을 계산했을 때 추가 주문을 통해 받을 수 있는 무료 증정 수량
     private int nonDiscountedQuantity; // 프로모션 재고 부족으로 할인이 적용되지 않는 수량
 
-    public PurchaseSummary(Product product, Promotion promotion, int orderedQuantity, int promotionStock, int noPromotionStock, LocalDateTime now) {
+    PurchaseSummary(Product product, Promotion promotion, int orderedQuantity, int promotionStock, int noPromotionStock, LocalDateTime now) {
         this.product = product;
         this.promotion = isPromotionValid(promotion, now) ? promotion : null;
 

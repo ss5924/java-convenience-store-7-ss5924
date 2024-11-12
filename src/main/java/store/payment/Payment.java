@@ -11,7 +11,7 @@ public class Payment {
     private int membershipDiscountAmount;
     private int finalPaymentAmount;
 
-    public Payment(List<Item> purchaseItems, List<Item> giftItems) {
+    Payment(List<Item> purchaseItems, List<Item> giftItems) {
         validate(purchaseItems, giftItems);
         initialize(purchaseItems, giftItems);
     }

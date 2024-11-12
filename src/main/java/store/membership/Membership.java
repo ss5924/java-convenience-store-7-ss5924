@@ -3,7 +3,7 @@ package store.membership;
 public class Membership {
     private int remainPoint;
 
-    public Membership(int remainPoint) {
+    Membership(int remainPoint) {
         this.remainPoint = remainPoint;
     }
 

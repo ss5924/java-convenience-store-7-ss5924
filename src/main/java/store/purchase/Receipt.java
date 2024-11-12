@@ -7,7 +7,7 @@ import java.text.NumberFormat;
 public class Receipt {
     private Purchase purchase;
 
-    public Receipt(Purchase purchase) {
+    Receipt(Purchase purchase) {
         this.purchase = purchase;
     }
 
