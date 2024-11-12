@@ -1,6 +1,16 @@
 # java-convenience-store-precourse
 
-## 가. 기능 요구 사항
+## 가. 개요
+
+### 1. 프로젝트 요약
+
+- 구매자의 할인 혜택과 재고 상황을 고려하여 최종 결제 금액을 계산하고 안내하는 결제 시스템
+
+### 2. 개발 기간
+
+- 2024-11.6 ~ 2024-11.13
+
+## 나. 기능 요구 사항
 
 #### 구매자의 할인 혜택과 재고 상황을 고려하여 최종 결제 금액을 계산하고 안내하는 결제 시스템을 구현한다.
 
@@ -48,7 +58,7 @@
 - [x] 내실돈: 최종 결제 금액
 - [x] 영수증의 구성 요소를 보기 좋게 정렬하여 고객이 쉽게 금액과 수량을 확인할 수 있게 한다.
 
-## 나. 구현 Plan
+## 다. 구현 Plan
 
 #### a. 도메인 구현
 
@@ -100,11 +110,11 @@
 3. InventoryReadService
     - 재고 load 서비스
 4. InventoryWriteService
-   - 재고 write 서비스
+    - 재고 write 서비스
 5. PurchaseService
     - 구매 프로세스
 6. PurchaseSummaryService
-   - 구매 내역 진행을 위한 요약 정보 서비스
+    - 구매 내역 진행을 위한 요약 정보 서비스
 7. PromotionService
     - 프로모션 서비스
 8. MembershipService
@@ -112,30 +122,34 @@
 9. AbstractFileReadService
     - 파일 출력 처리 서비스
 10. AbstractFileWriteService
-   - 파일 입력 처리 서비스
+    - 파일 입력 처리 서비스
 
 #### c. 유틸리티 구현
 
 1. MarkdownFileReader
-    - *.md load
+    - load *.md files
 2. MarkdownFileWriter
-   - *.md write
+    - write *.md files
 3. PromptHandler
-   - 화면 입출력 핸들러
+    - 화면 입출력 핸들러
 4. InputToOrderConverter
     - 입력 String Order 객체 컨버터
 5. InputValidator
     - 입력값에 대한 유효성 검사
 
-## 다. 변경 사항
+## 라. 변경 사항
 
 #### v1.0-SNAPSHOT - 2023-11-12 (-develop branch)
+
+- 코드 정리
 - README update
 
 #### v1.0-SNAPSHOT - 2023-11-09
+
 - `PurchaseSummary` 도메인 추가하여 주문에 대한 요약 계산 수행
 
 #### v1.0-SNAPSHOT - 2023-11-06
+
 - `AbstractFileReadService` 추가하여 file read에 대한 관심사 분리, 공통 로직에 대한 처리
 - `Purchase`:구매 내역 정보 담게 변경, `Receipt`:영수증 출력 담당 도메인
 - `Inventory` -> '`InventoryItem` 클래스명 의미에 맞게 변경
@@ -143,18 +157,19 @@
 - `OrderItem`로 개별 주문 상품 정보 관리, `Order`에서 주문 내역을 관할하여 여러 상품을 List로 관리
 - README에 업데이트 정보 추가
 
-
-## 라. TODO LIST
+## 마. TODO LIST
 
 #### v1.0-SNAPSHOT - 2023-11-10
+
 - ~~bug: 프로모션 기간이 지나면 일반 가격으로 적용해야하는데 프롬프트 안내 메시지가 출력되고 있음~~
 - ~~bug: 행사할인제품과 미제품 동시 구매시 버그 발견, 행사가 적용이 안됨, 첫번째가 증정품이 없으면 증정품이 리스트에 출력이 안되고, 증정품없는 항목이 안내 메시지가 출력됨~~
 - ~~bug: `Inventory` 조회 시 날짜 반영 부분 수정 필요~~
 - ~~추가적인 버그 수정~~
 - ~~README 정리~~
 - ~~코드 패키지 정리~~
-- 코드 리팩토링
+- ~~코드 리팩토링~~
 
 #### v1.0-SNAPSHOT - 2023-11-07
+
 - ~~주문 이후 구매 프로세스 정의~~
 - ~~file write 처리 구조 정의 (products.md 업데이트)~~
