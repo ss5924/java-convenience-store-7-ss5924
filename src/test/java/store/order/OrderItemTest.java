@@ -1,4 +1,4 @@
-package store;
+package store.order;
 
 import org.junit.jupiter.api.Test;
 import store.order.OrderItem;

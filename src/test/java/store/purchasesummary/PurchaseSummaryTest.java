@@ -1,4 +1,4 @@
-package store;
+package store.purchasesummary;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.BeforeEach;
