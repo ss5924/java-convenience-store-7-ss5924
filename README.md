@@ -85,7 +85,7 @@
 - **프로세스 1단계**
 - OrderProcessor: `프롬프트 출력 -> 상품(Product) 확인 -> 재고(InventoryItem) 확인 -> 주문(Order) 생성`
 - **프로세스 2단계**
-- OptionalOrderingProcessor` -> PurchaseSummary 작성`
+- PurchaseSummaryProcessor` -> PurchaseSummaries 작성`
 - **프로세스 3단계**
 - OptionalOrderingProcessor: `-> Optional Order 확인 -> PurchaseSummary 업데이트`
 - **프로세스 4단계**
