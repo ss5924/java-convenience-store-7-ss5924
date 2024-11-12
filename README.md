@@ -57,14 +57,14 @@
 2. Promotion
     - 프로모션 이름, n개 구매조건, n개 증정, 프로모션 시작일, 프로모션 종료일
 3. Membership
-    - 멤버십 할인 퍼센트, 남은 한도, 최대 한도(상수값)
+    - 남은 한도
 4. Receipt
-    - 영수증 출력을 담는 정보
+    - 영수증 출력용 toString override
 5. Payment
-    - 지불할 금액
+    - 지불할 금액 정보
     - 총구매액, 행사할인(Promotion), 멤버십할인(Membership), 최종지불금액
 6. InventoryItem
-    - 재고 상품
+    - 재고 정보
     - 상품(Product), quantity, 적용 프로모션(Promotion)
 7. Order
     - 주문 관리
@@ -76,9 +76,9 @@
     - 주문 상품(Product), 주문 갯수, 개별 지불 금액
 10. Purchase
    - 구매 내역 정보
-   - 구매 상품 내역(PurchaseItems), 증정 상품 내역(GiftItems), 금액 정보(Amount)
+   - 구매 상품 내역(PurchaseItems), 증정 상품 내역(GiftItems), 금액 정보(Payment)
 11. PurchaseSummary
-   - 주문 내역에 대한 요약 정보, 프로모션 행사 제품 적용 후의 갯수 변화 계산
+   - 주문 내역에 대한 요약 정보, 재고 및 주문 요약 정보
 
 #### b. 비즈니스 로직 구현
 
@@ -94,17 +94,21 @@
 - PurchaseProcessor: `-> 멤버십(Membership) 할인여부 적용 -> -> 구매(Purchase) 프로세스 진행하여 영수증(Receipt) 출력`
 
 1. ProductService
-    - 상품 정보 조회
+    - 상품 정보 조회 서비스
 2. OrderService
-    - 주문 생성 (주문 생성 시 재고 확인 후 -> 구매 프로세스 진행)
-3. InventoryService
-    - 재고 개수 확인, 재고 업데이트
+    - 주문 생성 서비스
+3. InventoryReadService
+    - 재고 load 서비스
+4. InventoryWriteService
+   - 재고 write 서비스
 4. PurchaseService
-    - 구매 프로세스 (프로모션 및 멤버십 적용 -> 영수증 프로세스 진행)
+    - 구매 프로세스
+5. PurchaseSummaryService
+   - 구매 내역 진행을 위한 요약 정보 서비스
 5. PromotionService
-    - 프로모션 조건 확인 및 적용
+    - 프로모션 서비스
 6. MembershipService
-    - 멤버십 할인 및 한도 관리
+    - 멤버십 할인 및 한도 관리 서비스
 7. AbstractFileReadService
     - 파일 출력 처리 서비스
 8. AbstractFileWriteService

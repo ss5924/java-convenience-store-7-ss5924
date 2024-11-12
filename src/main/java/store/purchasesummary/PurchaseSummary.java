@@ -56,7 +56,7 @@ public class PurchaseSummary {
     public void updateNonDiscountedQuantityWithOrderOption(boolean isNonDiscountedQuantity) {
         if (!isNonDiscountedQuantity) {
             this.actualPurchaseQuantity -= this.nonDiscountedQuantity;
-            this.remainingNoPromotionStock += this.nonDiscountedQuantity; // todo
+            this.remainingNoPromotionStock += this.nonDiscountedQuantity;
             this.nonDiscountedQuantity = 0;
         }
     }
