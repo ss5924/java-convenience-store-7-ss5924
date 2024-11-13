@@ -37,19 +37,20 @@ public class GraphicUIHandler extends UserInterfaceHandler {
 
     @Override
     public Order promptOrderUntilValidInputForm() {
-        try {
-            String input = getUserResponseInputString();
+        while (true) {
+            try {
+                String input = getUserResponseInputString();
 
-            Order order = getOrderService().createOrder(input);
-            boolean isMembershipDiscount = isMembershipDiscount();
-            order.setMembershipDiscount(isMembershipDiscount);
-            return order;
+                Order order = getOrderService().createOrder(input);
+                boolean isMembershipDiscount = isMembershipDiscount();
+                order.setMembershipDiscount(isMembershipDiscount);
+                return order;
 
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(frame, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(frame, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
-        throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다.");
     }
 
     private boolean isMembershipDiscount() {
@@ -65,7 +66,9 @@ public class GraphicUIHandler extends UserInterfaceHandler {
         printAllInventoryItemsToArea(inventoryArea);
 
         JTextField inputField = new JTextField();
+        JLabel instructionLabel = new JLabel("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
         panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(instructionLabel, BorderLayout.NORTH);
         panel.add(inputField, BorderLayout.SOUTH);
 
         while (true) {
@@ -91,7 +94,13 @@ public class GraphicUIHandler extends UserInterfaceHandler {
 
     @Override
     public void printReceipt(Receipt receipt) {
-        JOptionPane.showMessageDialog(frame, receipt.toString(), "Receipt", JOptionPane.INFORMATION_MESSAGE);
+        String formattedReceipt = receipt.toString().replace("\t", "    ");
+        JTextArea receiptArea = new JTextArea(formattedReceipt);
+        receiptArea.setEditable(false);
+        receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+        JScrollPane scrollPane = new JScrollPane(receiptArea);
+        JOptionPane.showMessageDialog(frame, scrollPane, "Receipt", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void printAllInventoryItemsToArea(JTextArea inventoryArea) {
