@@ -15,14 +15,13 @@ public class InventoryUpdateManager {
     public void updateInventoryFromSummaries(List<InventoryItem> inventoryItems, List<PurchaseSummary> summaries) {
         summaries.forEach(summary -> {
             Product product = summary.getProduct();
-            int totalDeductQuantity = summary.getActualPurchaseQuantity() + summary.getPotentialGiftItems();
 
-            InventoryItem updatedItem = new InventoryItem(product, totalDeductQuantity, summary.getPromotion());
+            InventoryItem updatedItemNoPromotionStock = new InventoryItem(product, summary.getRemainingNoPromotionStock(), null);
+            InventoryItem updatedItemPromotionStock = new InventoryItem(product, summary.getRemainingPromotionStock(), summary.getPromotion());
 
-            if (summary.getPromotion() == null) {
-                inventoryWriteService.updateInventoryItemQuantityWithoutPromotion(inventoryItems, updatedItem);
-            } else {
-                inventoryWriteService.updateInventoryItemQuantityWithPromotion(inventoryItems, updatedItem);
+            inventoryWriteService.updateInventoryItemQuantityWithoutPromotion(inventoryItems, updatedItemNoPromotionStock);
+            if (summary.getPromotion() != null) {
+                inventoryWriteService.updateInventoryItemQuantityWithPromotion(inventoryItems, updatedItemPromotionStock);
             }
         });
 

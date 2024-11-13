@@ -10,9 +10,10 @@ public class InventoryWriteService extends AbstractFileWriteService<InventoryIte
 
     public void updateInventoryItemQuantityWithoutPromotion(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
         inventoryItems.stream()
-                .filter(item -> item.getProduct().equals(updatedItem.getProduct()))
+                .filter(item -> item.getProduct().equals(updatedItem.getProduct())
+                        && item.getPromotion() == null)
                 .findFirst()
-                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity()))); // 차감 로직
+                .ifPresent(item -> item.setQuantity(updatedItem.getQuantity()));
     }
 
     public void updateInventoryItemQuantityWithPromotion(List<InventoryItem> inventoryItems, InventoryItem updatedItem) {
@@ -20,7 +21,7 @@ public class InventoryWriteService extends AbstractFileWriteService<InventoryIte
                 .filter(item -> item.getProduct().equals(updatedItem.getProduct())
                         && item.getPromotion().equals(updatedItem.getPromotion()))
                 .findFirst()
-                .ifPresent(item -> item.setQuantity(Math.max(0, item.getQuantity() - updatedItem.getQuantity()))); // 차감 로직
+                .ifPresent(item -> item.setQuantity(updatedItem.getQuantity()));
     }
 
     public void saveInventoryItems(List<InventoryItem> inventoryItems) {
