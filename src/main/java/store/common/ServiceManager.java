@@ -1,16 +1,16 @@
 package store.common;
 
-import store.io.InputToOrderConverter;
-import store.io.PromptHandler;
-import store.membership.MembershipManager;
-import store.membership.MembershipService;
-import store.order.OrderService;
 import store.inventory.InventoryReadService;
 import store.inventory.InventoryUpdateManager;
 import store.inventory.InventoryWriteService;
+import store.ui.GraphicUIHandler;
+import store.io.InputToOrderConverter;
+import store.membership.MembershipManager;
+import store.membership.MembershipService;
+import store.order.OrderService;
+import store.payment.PaymentFactory;
 import store.product.ProductService;
 import store.promotion.PromotionService;
-import store.payment.PaymentFactory;
 import store.purchase.PurchaseService;
 import store.purchasesummary.PurchaseSummaryFactory;
 import store.purchasesummary.PurchaseSummaryService;
@@ -29,7 +29,7 @@ public class ServiceManager {
     private final PurchaseSummaryService purchaseSummaryService;
     private final PurchaseService purchaseService;
     private final InventoryWriteService inventoryWriteService;
-    private final PromptHandler promptHandler;
+    private final GraphicUIHandler graphicUIHandler;
 
     public ServiceManager() {
         this.membershipManager = new MembershipManager();
@@ -44,8 +44,8 @@ public class ServiceManager {
         this.inputToOrderConverter = new InputToOrderConverter(productService);
         this.orderService = new OrderService(inventoryReadService, inputToOrderConverter);
         this.inventoryUpdateManager = new InventoryUpdateManager(inventoryWriteService);
-        this.promptHandler = new PromptHandler(inventoryReadService, orderService);
         this.purchaseSummaryService = new PurchaseSummaryService(purchaseSummaryFactory, inventoryReadService);
+        this.graphicUIHandler = new GraphicUIHandler(inventoryReadService, orderService);
     }
 
     public MembershipManager getMembershipManager() {
@@ -96,11 +96,11 @@ public class ServiceManager {
         return orderService;
     }
 
-    public PromptHandler getPromptHandler() {
-        return promptHandler;
-    }
-
     public PurchaseSummaryService getPurchaseSummaryService() {
         return purchaseSummaryService;
+    }
+
+    public GraphicUIHandler getGraphicUIHandler() {
+        return graphicUIHandler;
     }
 }

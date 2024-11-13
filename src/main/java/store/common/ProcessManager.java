@@ -14,8 +14,8 @@ public class ProcessManager {
     private final PurchaseSummaryProcessor purchaseSummaryProcessor;
 
     public ProcessManager(ServiceManager serviceManager) {
-        this.orderProcessor = new OrderProcessor(serviceManager.getPromptHandler());
-        this.optionalOrderingProcessor = new OptionalOrderingProcessor();
+        this.orderProcessor = new OrderProcessor(serviceManager.getGraphicUIHandler());
+        this.optionalOrderingProcessor = new OptionalOrderingProcessor(serviceManager.getGraphicUIHandler());
         this.inventoryProcessor = new InventoryProcessor(
                 serviceManager.getInventoryReadService(), serviceManager.getInventoryUpdateManager());
         this.purchaseProcessor = new PurchaseProcessor(serviceManager.getPurchaseService());

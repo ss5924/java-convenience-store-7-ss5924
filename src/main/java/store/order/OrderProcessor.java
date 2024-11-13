@@ -1,15 +1,15 @@
 package store.order;
 
-import store.io.PromptHandler;
+import store.ui.UserInterfaceHandler;
 
 public class OrderProcessor {
-    private final PromptHandler promptHandler;
+    private final UserInterfaceHandler userInterfaceHandler;
 
-    public OrderProcessor(PromptHandler promptHandler) {
-        this.promptHandler = promptHandler;
+    public OrderProcessor(UserInterfaceHandler userInterfaceHandler) {
+        this.userInterfaceHandler = userInterfaceHandler;
     }
 
     public Order promptOrderUntilValidInputForm() {
-        return promptHandler.promptOrderUntilValidInputForm();
+        return userInterfaceHandler.promptOrderUntilValidInputForm();
     }
 }

@@ -1,13 +1,18 @@
 package store.order;
 
 import camp.nextstep.edu.missionutils.DateTimes;
-import store.io.PromptHandler;
+import store.ui.UserInterfaceHandler;
 import store.product.Product;
 import store.purchasesummary.PurchaseSummary;
 
 import java.util.List;
 
 public class OptionalOrderingProcessor {
+    private final UserInterfaceHandler userInterfaceHandler;
+
+    public OptionalOrderingProcessor(UserInterfaceHandler userInterfaceHandler) {
+        this.userInterfaceHandler = userInterfaceHandler;
+    }
 
     public void updateSummariesWithOptionalOrdering(List<PurchaseSummary> summaries) {
         setEligibleFreeItemsOption(summaries);
@@ -22,7 +27,7 @@ public class OptionalOrderingProcessor {
                     int requiredCondition = summary.getPromotion().getRequiredCondition();
                     int giftQuantity = summary.getPromotion().getGiftQuantity();
                     if (summary.getActualPurchaseQuantity() % (requiredCondition + giftQuantity) != 0) {
-                        String response = PromptHandler.promptFreeItemOffer(product.getName());
+                        String response = userInterfaceHandler.promptFreeItemOffer(product.getName());
                         summary.updateEligibleFreeItemsWithOrderOption(response.equals("Y"));
                     }
                 });
@@ -35,7 +40,7 @@ public class OptionalOrderingProcessor {
                     int nonDiscountedQuantity = summary.getNonDiscountedQuantity();
                     Product product = summary.getProduct();
                     if (nonDiscountedQuantity > 0) {
-                        String response = PromptHandler.promptNonDiscountedPurchase(product.getName(), nonDiscountedQuantity);
+                        String response = userInterfaceHandler.promptNonDiscountedPurchase(product.getName(), nonDiscountedQuantity);
                         summary.updateNonDiscountedQuantityWithOrderOption(response.equals("Y"));
                     }
                 });
