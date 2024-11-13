@@ -139,6 +139,10 @@
 
 ## 라. 변경 사항
 
+#### v1.0-SNAPSHOT - 2023-11-13 (-develop branch)
+- 재고 차감 버그 fix
+- JFrame UI 적용
+
 #### v1.0-SNAPSHOT - 2023-11-12 (-develop branch)
 
 - 코드 정리
