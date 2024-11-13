@@ -33,23 +33,16 @@ public class Application {
         }
     }
 
-    private boolean processOrderCycle(ServiceManager serviceManager, ProcessManager processManager) {
-        try {
-            Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm();
+    private boolean processOrderCycle(ServiceManager serviceManager, ProcessManager processManager) throws ApplicationExitException {
+        Order order = processManager.getOrderProcessor().promptOrderUntilValidInputForm();
 
-            List<PurchaseSummary> summaries = processManager.getPurchaseSummaryProcessor().createPurchaseSummaries(order);
-            processManager.getOptionalOrderingProcessor().updateSummariesWithOptionalOrdering(summaries);
-            processManager.getInventoryProcessor().updateInventory(summaries);
-            Receipt receipt = processManager.getPurchaseProcessor().processPurchase(summaries, USER_ID, order.isMembershipDiscount());
-            serviceManager.getGraphicUIHandler().printReceipt(receipt);
+        List<PurchaseSummary> summaries = processManager.getPurchaseSummaryProcessor().createPurchaseSummaries(order);
+        processManager.getOptionalOrderingProcessor().updateSummariesWithOptionalOrdering(summaries);
+        processManager.getInventoryProcessor().updateInventory(summaries);
+        Receipt receipt = processManager.getPurchaseProcessor().processPurchase(summaries, USER_ID, order.isMembershipDiscount());
+        serviceManager.getGraphicUIHandler().printReceipt(receipt);
 
-            return serviceManager.getGraphicUIHandler().promptForAdditionalPurchase().equals("Y");
-        } catch (ApplicationExitException e) {
-            throw e;
-        } catch (Exception e) {
-            System.out.println("예기치 못한 오류가 발생했습니다: " + e.getMessage());
-            return false;
-        }
+        return serviceManager.getGraphicUIHandler().promptForAdditionalPurchase().equals("Y");
     }
 
     private void shutdownApplication(ServiceManager serviceManager) {
